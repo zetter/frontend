@@ -53,6 +53,7 @@ $player-card-avatar: (
 }
 .player-card__position {
     @include fs-textSans(4);
+    font-weight: bold;
     color: $sport-mid;
 }
 
@@ -73,7 +74,7 @@ $player-card-avatar: (
 }
 .player-card__stat-value {
     @include fs-textSans(2);
-    border-top: 1px solid $neutral-3;
+    border-top: 1px solid $neutral-4;
     font-weight: bold;
     padding-left: 85%;
     text-align: right;
