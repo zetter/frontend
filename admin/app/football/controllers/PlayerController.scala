@@ -49,7 +49,7 @@ class PlayerController(val wsClient: WSClient)(implicit val context: Application
           playerStats <- client.playerStats(playerId, competition.startDate, LocalDate.now(), teamId, competitionId)
           playerAppearances <- client.appearances(playerId, competition.startDate, LocalDate.now(), teamId, competitionId)
         } yield {
-          val result = createPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances)
+          val result = createPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances, teamId)
           result.map(renderPlayerCard).getOrElse(renderNotFound)
         }
       }
@@ -67,7 +67,7 @@ class PlayerController(val wsClient: WSClient)(implicit val context: Application
       playerStats <- client.playerStats(playerId, startDate, LocalDate.now(), teamId)
       playerAppearances <- client.appearances(playerId, startDate, LocalDate.now(), teamId)
     } yield {
-      val result = createPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances)
+      val result = createPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances, teamId)
       result.map(renderPlayerCard).getOrElse(renderNotFound)
     }
   }
@@ -84,13 +84,13 @@ class PlayerController(val wsClient: WSClient)(implicit val context: Application
     else NotFound
   }
 
-  private def createPlayerCard(cardType: String, playerId: String, playerProfile: PlayerProfile, playerStats: StatsSummary, playerAppearances: PlayerAppearances):
+  private def createPlayerCard(cardType: String, playerId: String, playerProfile: PlayerProfile, playerStats: StatsSummary, playerAppearances: PlayerAppearances, teamId: String):
     Option[HtmlFormat.Appendable] = {
     cardType match {
       case "attack" => Some(views.html.football.player.cards.attack(playerId, playerProfile, playerStats, playerAppearances))
       case "assist" => Some(views.html.football.player.cards.assist(playerId, playerProfile, playerStats, playerAppearances))
       case "discipline" => Some(views.html.football.player.cards.discipline(playerId, playerProfile, playerStats, playerAppearances))
-      case "defence" => Some(views.html.football.player.cards.defence(playerId, playerProfile, playerStats, playerAppearances))
+      case "defence" => Some(views.html.football.player.cards.defence(playerId, playerProfile, playerStats, playerAppearances, teamId))
       case "goalkeeper" => Some(views.html.football.player.cards.goalkeeper(playerId, playerProfile, playerStats, playerAppearances))
       case _ => None
     }

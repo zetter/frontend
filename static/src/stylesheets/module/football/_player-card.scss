@@ -21,6 +21,11 @@ $player-card-avatar: (
     }
 }
 
+.player-card__team {
+  float: left;
+  border: 1px solid green;
+}
+
 .player-card__image-container {
     float: right;
 }
