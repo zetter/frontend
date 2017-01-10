@@ -22,8 +22,13 @@ $player-card-avatar: (
 }
 
 .player-card__team {
-  float: left;
+  display: inline-block;
   border: 1px solid green;
+
+  .team-crest {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
 }
 
 .player-card__image-container {
