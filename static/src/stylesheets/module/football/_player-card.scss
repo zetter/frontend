@@ -11,7 +11,7 @@ $player-card-avatar: (
  * https://github.com/guardian/frontend/tree/master/admin/app/views/football/player/cards
  **/
 .player-card {
-    padding: $gs-baseline $gs-gutter/2;
+    padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline $gs-gutter/2;
     background: $neutral-8;
     border-top: 1px solid $sport-mid;
     color: $neutral-1;
@@ -26,13 +26,14 @@ $player-card-avatar: (
   border: 1px solid green;
 
   .team-crest {
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 40px;
+    width: 40px;
   }
 }
 
 .player-card__image-container {
     float: right;
+    margin-right: -4px;
 }
 .player-card__image {
     @include circular;
