@@ -255,7 +255,9 @@ object MediaAtom extends common.Logging {
   }
 
   def imageMediaMake(capiImage: AtomApiImage, caption: String): ImageMedia = {
-    ImageMedia(capiImage.assets.map(mediaImageAssetMake(_, caption)))
+    val assets: Seq[ImageAsset] = capiImage.assets.map(mediaImageAssetMake(_, caption))
+    val master: Option[ImageAsset] = capiImage.master.map(mediaImageAssetMake(_, caption, isMaster = true))
+    ImageMedia(assets ++ master)
   }
 
   def mediaAssetMake(mediaAsset: AtomApiMediaAsset): MediaAsset = {
@@ -266,7 +268,7 @@ object MediaAtom extends common.Logging {
       mimeType = mediaAsset.mimeType)
   }
 
-  def mediaImageAssetMake(mediaImage: AtomApiImageAsset, caption: String): ImageAsset = {
+  def mediaImageAssetMake(mediaImage: AtomApiImageAsset, caption: String, isMaster: Boolean = false): ImageAsset = {
     ImageAsset(
       mediaType = "image",
       mimeType = mediaImage.mimeType,
@@ -275,7 +277,7 @@ object MediaAtom extends common.Logging {
         "height" -> mediaImage.dimensions.map(_.height).map(_.toString),
         "width" -> mediaImage.dimensions.map(_.width).map(_.toString),
         "caption" -> Some(caption),
-        "altText" -> Some(caption)
+        "isMaster" -> (if (isMaster) Some("true") else None)
       ).collect{ case(k, Some(v)) => (k,v) }
     )
   }
