@@ -1,8 +1,8 @@
-@()(implicit request: RequestHeader, context: model.ApplicationContext)
-
 @import conf.Configuration
 @import common.LinkTo
-@import navigation.{NewNavigation, Pillars}
+@import navigation.NavMenu
+
+@(navMenu: NavMenu)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 <header class="header"
         role="banner">
@@ -28,7 +28,7 @@
         </a>
 
         <ul class="pillars">
-            @Pillars.all.map { link =>
+            @navMenu.pillars.map { link =>
                 <li class="pillars__item">
                     <a class="pillar-link"
                         href="@LinkTo(link.url)"

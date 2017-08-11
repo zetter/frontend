@@ -1,11 +1,12 @@
-@(page: model.Page, showNav: Boolean = true, isAmp: Boolean = false)(implicit request: RequestHeader)
-
+@import navigation.NavMenu
 @import org.joda.time.DateTime
 @import common.Edition
 @import common.LinkTo
 @import common.editions.{Au, Uk, Us, International}
 @import model.Page
 @import conf.switches.Switches.EmailInlineInFooterSwitch
+
+@(navMenu: NavMenu, showNav: Boolean = true, isAmp: Boolean = false)(implicit request: RequestHeader)
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
     @if(!mvt.ABNewDesktopHeaderVariant.isParticipating && !isAmp) {
@@ -27,11 +28,11 @@
 
                 @if(showNav) {
                     <div class="l-footer__navigation-wrapper u-cf">
-                        @fragments.nav.navigationFooter(page)
+                        @fragments.nav.navigationFooter(navMenu.page)
                     </div>
                 }
 
-                @Page.getContentPage(page).map(fragments.breadcrumb(_))
+                @Page.getContentPage(navMenu.page).map(fragments.breadcrumb(_))
             </div>
         </div>
     }
@@ -39,7 +40,7 @@
     <div class="footer__primary @if(!mvt.ABNewDesktopHeaderVariant.isParticipating) {mobile-only}">
 
         @if(!isAmp) {
-            @fragments.nav.subNav(page, isFooter = true)
+            @fragments.nav.subNav(navMenu, isFooter = true)
         }
 
         <a data-link-name="back to top" href="#top">

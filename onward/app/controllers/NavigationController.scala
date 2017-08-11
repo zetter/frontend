@@ -1,9 +1,9 @@
 package controllers
 
 import common.{Edition, JsonComponent, LinkTo, NavItem, SectionLink}
-import navigation.{NavLink, NavLink2, Pillar, NewNavigation, NavigationHelpers, Pillars}
-import model.Cached
-import model.Cached.RevalidatableResult
+import navigation._
+import _root_.model.Cached
+import _root_.model.Cached.RevalidatableResult
 import play.api.libs.json.{Json, Writes}
 import play.api.mvc.{Action, Controller}
 
@@ -12,7 +12,7 @@ class NavigationController extends Controller {
   private case class SectionLinkAndEdition(link: SectionLink, edition: Edition)
   private case class NavItemAndEdition(link: NavItem, edition: Edition)
 
-  private case class topLevelNavItems(pillar: Pillar)
+  private case class topLevelNavItems(pillar: NavLink2)
   private case class navSectionLink(navLink: NavLink2)
   private case class membershipSectionLink(navLink: NavLink)
 
@@ -67,15 +67,15 @@ class NavigationController extends Controller {
         def writes(item: topLevelNavItems) = Json.obj(
           "title" -> item.pillar.title,
           "longDisplayName" -> item.pillar.longDisplayName,
-          "subSections" -> item.pillar.children.getEditionalisedList(edition).map( navLink => navSectionLink(navLink))
+          "subSections" -> item.pillar.children.map( navLink => navSectionLink(navLink))
         )
       }
 
       JsonComponent(
         "items" -> Json.arr(
           Json.obj(
-            "topLevelSections" -> Pillars.all.map(section => topLevelNavItems(section) ),
-            "membershipLinks" -> NavigationHelpers.getMembershipLinks(edition).map( section => membershipSectionLink(section)),
+            "topLevelSections" -> NavRoot(edition).pillars.map(section => topLevelNavItems(section) ),
+            "membershipLinks" -> UrlHelpers.getMembershipLinks(edition).map(section => membershipSectionLink(section)),
             "secondarySections" -> navSecondarySections
           )
         )

@@ -1,9 +1,12 @@
 @import common.InlineJs
 @import model.Page
 @import templates.inlineJS.blocking.js.enableStylesheets
+@import common.Edition
+@import navigation.NavMenu
 
 @(surveyPage: Page)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 
+@defining(NavMenu(surveyPage, Edition(request))) { navMenu =>
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
 
@@ -14,7 +17,7 @@
         @fragments.metaData(surveyPage)
 
         @* get the stylesheets downloading ASAP *@
-        @fragments.stylesheets(projectName=Option("survey"))
+        @fragments.stylesheets(projectName = Option("survey"))
 
         @* polyfill, feature detect etc before we try and use the stylesheets *@
         @fragments.inlineJSBlocking(surveyPage)
@@ -29,13 +32,14 @@
     id="survey-laboratory"
     itemscope itemtype="http://schema.org/WebPage">
 
-        @fragments.header(surveyPage)
+        @fragments.header(navMenu)
 
         @body
 
-        @fragments.footer(surveyPage)
+        @fragments.footer(navMenu)
 
         @fragments.inlineJSNonBlocking(surveyPage)
 
     </body>
 </html>
+}

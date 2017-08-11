@@ -1,16 +1,16 @@
-@(page: model.Page, isFooter: Boolean = false)(implicit request: RequestHeader)
-
-@import common.{ Edition, LinkTo }
-@import navigation.{ NavigationHelpers, NavLink2 }
+@import navigation.{ NavLink2, NavMenu }
+@import common.LinkTo
 @import views.support.RenderClasses
 
-@subNavItem(link: NavLink2, index: Int, id: String) = {
+@(navMenu: NavMenu, isFooter: Boolean = false)(implicit request: RequestHeader)
+
+@subNavItem(link: NavLink2, index: Int, current: String) = {
     <li class="@RenderClasses(Map(
         "hide-until-desktop" -> (index > 4)
     ),"subnav__item")">
         <a class="@RenderClasses(Map(
                 "subnav-link" -> true,
-                "subnav-link--current-section" -> (id == link.id)
+                "subnav-link--current-section" -> (current == link.id)
             ))"
             href="@LinkTo(link.url)"
             data-link-name="nav2 : subnav : @{link.title}">
@@ -20,37 +20,30 @@
     </li>
 }
 
-@defining(NavigationHelpers.getSubNav(page)) { maybeNavItem =>
-    @maybeNavItem.map { navItem =>
+@navMenu.currentNav.map { currentNav =>
+    <div class="subnav">
+        <div class="gs-container">
+            <ul class="subnav__list"
+                data-pillar-title="@navMenu.currentPillar.map(_.title).getOrElse("")">
 
-        <div class="subnav">
-            <div class="gs-container">
-                <ul class="subnav__list"
-                    data-pillar-title="@navItem.pillar.title">
+            @navMenu.subNavSections.zipWithIndex.map { case (link, index) =>
+                @subNavItem(link, index, currentNav.id)
+            }
 
-                    @defining(
-                        NavigationHelpers.getSectionsToDisplay(navItem, Edition(request))
-                    ) { sections =>
-                        @sections.zipWithIndex.map { case (link, index) =>
-                            @subNavItem(link, index, navItem.id)
-                        }
-                    }
+            @* Hiding the 'more' link on the homepage and footer *@
+            @if(!(currentNav.id == "uk" ||  currentNav.id == "us" ||  currentNav.id == "au" ||  currentNav.id == "international" || isFooter)) {
+                <li class="subnav__item js-visible hide-on-desktop">
+                    <button class="
+                        subnav-link
+                        subnav-link--toggle-more
+                        js-toggle-nav-section"
+                        data-link-name="nav2 : subnav-toggle">
+                        more
+                    </button>
+                </li>
+            }
+            </ul>
 
-                @* Hiding the 'more' link on the homepage and footer *@
-                @if(!(navItem.id == "uk" ||  navItem.id == "us" ||  navItem.id == "au" ||  navItem.id == "international" || isFooter)) {
-                    <li class="subnav__item js-visible hide-on-desktop">
-                        <button class="
-                            subnav-link
-                            subnav-link--toggle-more
-                            js-toggle-nav-section"
-                            data-link-name="nav2 : subnav-toggle">
-                            more
-                        </button>
-                    </li>
-                }
-                </ul>
-
-            </div>
         </div>
-    }
+    </div>
 }

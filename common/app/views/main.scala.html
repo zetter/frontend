@@ -4,21 +4,22 @@
 @import model.Page.getContent
 @import views.support.{Commercial, RenderClasses}
 @import play.api.Mode.Dev
+@import navigation.NavMenu
 
-@headerAndTopAds(showAdverts: Boolean, edition: Edition, content: Option[model.ContentType]) = {
+@headerAndTopAds(showAdverts: Boolean, edition: Edition, content: Option[model.ContentType], navMenu: NavMenu) = {
   @if(!page.metadata.shouldHideHeaderAndTopAds) {
     @defining(showAdverts && !content.exists(_.tags.isTheMinuteArticle) && !Commercial.isAdFree(request)) { showTopSlot =>
       @if(content.exists(_.tags.hasSuperStickyBanner)) {
           @if(showTopSlot) {
             @fragments.commercial.topBanner(page.metadata)
           }
-          @fragments.header(page)
+          @fragments.header(navMenu)
       } else {
           <div id="bannerandheader">
               @if(showTopSlot) {
                 @fragments.commercial.topBanner(page.metadata)
               }
-              @fragments.header(page)
+              @fragments.header(navMenu)
           </div>
       }
       <div id="maincontent" tabindex="0"></div>
@@ -32,7 +33,7 @@
     @fragments.head(page, projectName, head)
 </head>
 
-@defining(getContent(page), Commercial.shouldShowAds(page), Edition(request)) { case (content, showAdverts, edition) =>
+@defining(getContent(page), Commercial.shouldShowAds(page), Edition(request), NavMenu(page, Edition(request))) { case (content, showAdverts, edition, navMenu) =>
     @defining(Navigation.topLevelItem(edition.navigation, page)) { navigation =>
 
     <body
@@ -62,7 +63,7 @@
         @page match {
             case page: model.ContentPage if (page.item.content.isGallery && !page.item.content.tags.isInteractive) => {
                 <div class="immersive-header-container">
-                    @headerAndTopAds(showAdverts, edition, content)
+                    @headerAndTopAds(showAdverts, edition, content, navMenu)
 
                     @fragments.immersiveGalleryMainMedia(page)
                 </div>
@@ -73,7 +74,7 @@
                     ("immersive-header-container--explore-series", page.item.content.tags.isExploreSeries),
                     ("explore-video-container", page.item.content.elements.hasMainVideo)))">
 
-                    @headerAndTopAds(showAdverts, edition, content)
+                    @headerAndTopAds(showAdverts, edition, content, navMenu)
 
                     @fragments.exploreSeries(page)
                 </div>
@@ -84,7 +85,7 @@
                     ("immersive-header-container--photo-essay", page.item.content.isPhotoEssay)))">
 
                     @if(mvt.ABNewDesktopHeaderVariant.isParticipating) {
-                        @fragments.header(page)
+                        @fragments.header(navMenu)
                     }
 
                     @fragments.photoEssay(page)
@@ -93,14 +94,14 @@
             case page: model.ContentPage if (page.item.content.isImmersive && !page.item.content.tags.isInteractive && !page.item.content.tags.isVideo) => {
                 <div class="@if(page.item.fields.main.nonEmpty) { immersive-header-container }">
                     @if(mvt.ABNewDesktopHeaderVariant.isParticipating) {
-                        @fragments.header(page)
+                        @fragments.header(navMenu)
                     }
                     @fragments.immersiveMainMedia(page)
                 </div>
             }
             case _: commercial.hosted.HostedPage => {}
             case _ => {
-                @headerAndTopAds(showAdverts, edition, content)
+                @headerAndTopAds(showAdverts, edition, content, navMenu)
             }
         }
 
@@ -129,7 +130,7 @@
             </script>
         }
 
-        @fragments.footer(page)
+        @fragments.footer(navMenu)
 
         @fragments.inlineJSNonBlocking(page)
 

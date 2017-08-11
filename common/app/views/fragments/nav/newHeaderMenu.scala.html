@@ -1,47 +1,48 @@
-@()(implicit request: RequestHeader)
-
 @import common.{ LinkTo, Edition }
-@import navigation.{ NewNavigation, NavigationHelpers, NavLink, Pillars, Pillar}
+@import navigation.{NewNavigation, NavLink, NavMenu, NavLink2}
 @import conf.switches.Switches.SearchSwitch
 @import views.support.RenderClasses
 
-@sectionList(topLevelSection: Pillar, edition: Edition) = {
+@import navigation.UrlHelpers
+@(navMenu: NavMenu)(implicit request: RequestHeader)
+
+@sectionList(section: NavLink2, edition: Edition) = {
     <li class="menu-item js-navigation-item"
-        data-section-name="@topLevelSection.title"
+        data-section-name="@section.title"
         role="menuitem">
         <button class="menu-item__title hide-on-desktop js-navigation-toggle"
-                data-link-name="nav2 : secondary : @topLevelSection.title"
+                data-link-name="nav2 : secondary : @section.title"
                 aria-haspopup="true"
                 aria-expanded="true">
             <i class="menu-item__toggle"></i>
-            @topLevelSection.title
+            @section.title
         </button>
 
         <ul class="menu-group menu-group--secondary"
             data-edition="@{edition.id.toLowerCase}"
-            aria-label="Submenu @{topLevelSection.title}"
+            aria-label="Submenu @{section.title}"
             role="menu">
 
             <li class="menu-item menu-item--home"
             role="menuitem">
                 <a class="menu-item__title"
-                href="@LinkTo { @topLevelSection.url }"
-                data-link-name="nav2 : secondary : @{topLevelSection.longDisplayName}">
+                href="@LinkTo { @section.url }"
+                data-link-name="nav2 : secondary : @{section.longDisplayName}">
 
                 @fragments.inlineSvg("home", "icon", List("menu-item__icon"))
 
-                @topLevelSection.longDisplayName
+                @section.longDisplayName.getOrElse("")
                 </a>
             </li>
 
-            @topLevelSection.children.getEditionalisedList(edition).map{ sectionItem =>
+            @section.children.map{ subSection =>
                 <li class="menu-item"
                      role="menuitem">
                     <a class="menu-item__title"
-                        href="@LinkTo { @sectionItem.url }"
-                        data-link-name="nav2 : secondary : @{sectionItem.title}">
+                        href="@LinkTo { @subSection.url }"
+                        data-link-name="nav2 : secondary : @{subSection.title}">
 
-                        @sectionItem.title
+                        @subSection.title
                     </a>
                 </li>
             }
@@ -71,7 +72,7 @@
         <div class="menu__inner gs-container">
             <ul class="menu-group menu-group--primary"
                 role="menubar">
-                @Pillars.all.map { section =>
+                @navMenu.pillars.foreach { section =>
                     @sectionList(section, edition)
                 }
             </ul>
@@ -112,7 +113,7 @@
 
             <ul class="menu-group menu-group--membership"
                 role="menubar">
-                @NavigationHelpers.getMembershipLinks(edition).map { item =>
+                @UrlHelpers.getMembershipLinks(edition).map { item =>
                     <li class="menu-item hide-on-desktop"
                         data-edition="@{edition.id.toLowerCase}"
                         role="menuitem">
