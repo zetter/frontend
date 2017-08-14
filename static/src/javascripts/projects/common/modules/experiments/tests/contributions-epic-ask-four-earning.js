@@ -1,6 +1,8 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 
+console.log('contributions-epic-ask-four-earning.js parse!');
+
 export const askFourEarning: EpicABTest = makeABTest({
     id: 'ContributionsEpicAskFourEarning',
     campaignId: 'kr1_epic_ask_four_earning',

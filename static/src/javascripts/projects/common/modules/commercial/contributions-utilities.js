@@ -222,6 +222,7 @@ const makeABTestVariant = (
         test = noop,
         impression = submitABTestImpression =>
             mediator.once(parentTest.insertEvent, () => {
+                console.log('insert!');
                 submitEpicInsertEvent(
                     products,
                     campaignCode,
@@ -231,6 +232,7 @@ const makeABTestVariant = (
             }),
         success = submitABTestComplete =>
             mediator.once(parentTest.viewEvent, () => {
+                console.log('view!');
                 submitEpicViewEvent(
                     products,
                     campaignCode,
@@ -277,6 +279,7 @@ const makeABTestVariant = (
         },
 
         test() {
+            console.log('contributions-utilities test!');
             const render = (templateFn: ?EpicTemplate) =>
                 getCopy(useTailoredCopyForRegulars)
                     .then((copy: AcquisitionsEpicTemplateCopy) => {

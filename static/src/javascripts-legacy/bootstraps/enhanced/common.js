@@ -43,6 +43,7 @@ define([
     'common/modules/social/pinterest',
     'common/modules/social/hidden-share-toggle',
     'common/modules/commercial/membership-engagement-banner',
+    'common/modules/commercial/acquisitions-epic',
     'common/modules/email/email',
     'common/modules/email/email-article',
     'bootstraps/enhanced/identity-common',
@@ -91,6 +92,7 @@ define([
     pinterest,
     hiddenShareToggle,
     membershipEngagementBanner,
+    acquisitionsEpic,
     email,
     emailArticle,
     identity,
@@ -274,6 +276,10 @@ define([
                 }
             },
 
+            showEpic: function() {
+                acquisitionsEpic.showEpic();
+            },
+
             membershipEngagementBanner: function() {
                 if (config.switches.membershipEngagementBanner) {
                     membershipEngagementBanner.membershipEngagementBannerInit();
@@ -339,6 +345,7 @@ define([
                 ['c-accessibility-prefs', accessibilityPrefs.initAccessibilityPreferences],
                 ['c-pinterest', modules.initPinterest],
                 ['c-hidden-share-toggle', hiddenShareToggle.hiddenShareToggle],
+                ['c-show-epic', modules.showEpic],
                 ['c-show-membership-engagement-banner', modules.membershipEngagementBanner],
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
