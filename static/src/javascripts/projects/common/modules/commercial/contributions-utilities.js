@@ -395,6 +395,8 @@ const makeABTest = ({
         // to disable contributions asks for a particular piece of content
         showForSensitive: true,
         canRun() {
+            console.log('contribution-utilities canRun!');
+
             if (overrideCanRun) {
                 return doTagsMatch(this) && canRun();
             }
