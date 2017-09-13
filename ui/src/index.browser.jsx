@@ -1,31 +1,14 @@
 // @flow
 /* eslint-env browser */
 import { render } from 'preact';
-import { StyletronProvider } from 'styletron-preact';
-import StyletronClient from 'styletron-client';
-
-import Body from 'components/body';
-
-// this should be managed by a route somehow
-import Application from 'views/404';
+import App from 'components/app';
 
 const container: ?Element = document.body;
 
 const renderApp = () => {
-    const props = window.guardian;
-
     if (container) {
         render(
-            <StyletronProvider
-                styletron={
-                    new StyletronClient(
-                        document.getElementsByClassName('_styletron_hydrate_')
-                    )
-                }>
-                <Body {...props}>
-                    <Application {...props} />
-                </Body>
-            </StyletronProvider>,
+            <App />,
             container.parentElement,
             container
         );
