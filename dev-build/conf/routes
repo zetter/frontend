@@ -9,6 +9,9 @@ GET            /email-newsletters                                               
 GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
 
+# FONT LOADER
+GET            /fontloader                                                                                                       controllers.FontLoaderController.renderFontLoader()
+
 # For dev machines
 GET            /geolocation                                                                                                      controllers.FakeGeolocationController.geolocation
 GET            /assets/admin/lib/*file                                                                                           controllers.admin.UncachedWebAssets.at(file)
@@ -352,12 +355,15 @@ GET            /2015-06-24-manifest.json                                        
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
 <<<<<<< HEAD
+<<<<<<< HEAD
 GET            /embed/atom/:atomType/:id                                                                                         controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = true, hasVerticalScrollbar: Boolean = false, inApp: Boolean = false)
 GET            /embed/atom/:atomType/:id/nojs                                                                                    controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = false, hasVerticalScrollbar: Boolean = false, inApp: Boolean = false)
 GET            /embed/atom/:atomType/:id/nojs/scroll-y                                                                           controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = false, hasVerticalScrollbar: Boolean = true, inApp: Boolean = false)
 GET            /embed/atom/:atomType/:id/inapp                                                                                   controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = true, hasVerticalScrollbar: Boolean = true, inApp: Boolean = true)
 =======
 GET            /embed/webfonts                                                                                                   controllers.EmbedController.renderWebfonts()
+=======
+>>>>>>> create new route for font loader
 GET            /embed/atom/:atomType/:id                                                                                         controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = true, hasVerticalScrollbar: Boolean = false)
 GET            /embed/atom/:atomType/:id/nojs                                                                                    controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = false, hasVerticalScrollbar: Boolean = false)
 GET            /embed/atom/:atomType/:id/nojs/scroll-y                                                                           controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = false, hasVerticalScrollbar: Boolean = true)
