@@ -10,45 +10,37 @@ module.exports = {
             disallowedStrings.map(
                 ({ regex, message, maxOccurrences, pathspecs }) =>
                     getChangedFiles().then(files => {
-                        const searchedFiles = files.map(file =>
-                            execa
-                                .stdout('git', [
-                                    'grep',
-                                    '-Ein',
-                                    '--color',
-                                    regex.source,
-                                    file,
-                                ])
-                                .then(matches => ({ file, hasMatches: true }))
-                                .catch(err => {
-                                    // git grep returns with error code 1 when there are no matches.
-                                    // For us, this is not actually an error state so we swallow the
-                                    // error by returning a fake resolved Promise.
-                                    if (
-                                        err.code === 1 &&
-                                        err.stdout === '' &&
-                                        err.stderr === ''
-                                    ) {
-                                        return { file, hasMatches: false };
-                                    }
+                        if (!files.length || !files.every(f => !!f)) return;
 
-                                    // In all other cases, assume it's a real error
-                                    return Promise.reject(err);
-                                })
-                        );
+                        execa
+                            .stdout('git', [
+                                'grep',
+                                '-Ein',
+                                '--color',
+                                regex.source,
+                                ...files,
+                            ])
+                            .then(matches => checkForDisallowedString({
+                                regex,
+                                message,
+                                maxOccurrences,
+                                pathspecs,
+                            }))
+                            .catch(err => {
+                                // git grep returns with error code 1 when there are no matches.
+                                // For us, this is not actually an error state so we swallow the
+                                // error by returning a fake resolved Promise.
+                                if (
+                                    err.code === 1 &&
+                                    err.stdout === '' &&
+                                    err.stderr === ''
+                                ) {
+                                    return;
+                                }
 
-                        return Promise.all(
-                            searchedFiles
-                        ).then(searchedFiles => {
-                            if (searchedFiles.some(f => f.hasMatches)) {
-                                return checkForDisallowedString({
-                                    regex,
-                                    message,
-                                    maxOccurrences,
-                                    pathspecs,
-                                });
-                            }
-                        });
+                                // In all other cases, assume it's a real error
+                                return Promise.reject(err);
+                            })
                     })
             )
         ),
