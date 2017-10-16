@@ -1,15 +1,14 @@
 const execa = require('execa');
 const chalk = require('chalk');
 
-const checkForDisallowedString = ({regex, message, maxOccurrences, pathspecs}) =>
+const checkForDisallowedString = ({
+    regex,
+    message,
+    maxOccurrences,
+    pathspecs,
+}) =>
     execa
-        .stdout('git', [
-            'grep',
-            '-Ein',
-            '--color',
-            regex.source,
-            ...pathspecs,
-        ])
+        .stdout('git', ['grep', '-Ein', '--color', regex.source, ...pathspecs])
         .then(matches => matches.split('\n'))
         .then(matches => {
             if (matches.length > maxOccurrences) {
@@ -30,11 +29,7 @@ const checkForDisallowedString = ({regex, message, maxOccurrences, pathspecs}) =
             // git grep returns with error code 1 when there are no matches.
             // For us, this is not actually an error state so we swallow the
             // error by returning a fake resolved Promise.
-            if (
-                err.code === 1 &&
-                err.stdout === '' &&
-                err.stderr === ''
-            ) {
+            if (err.code === 1 && err.stdout === '' && err.stderr === '') {
                 return Promise.resolve();
             }
 
