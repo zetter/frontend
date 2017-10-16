@@ -34,8 +34,6 @@ export type CtaUrls = {
     supportUrl?: string,
 };
 
-const b = 'hey';
-
 const membershipBaseURL = 'https://membership.theguardian.com/supporter';
 const contributionsBaseURL = 'https://contribute.theguardian.com';
 const supportBaseURL = 'https://support.theguardian.com/uk';
