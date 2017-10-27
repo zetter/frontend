@@ -147,7 +147,7 @@ object PressedContentFormat {
   }
 
   implicit val sectionIdFormat = Json.format[SectionId]
-  implicit val pillarFormat = Pillar.format
+  implicit val pillarFormat = Pillar.jsonFormat
   implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val paginationFormat = Json.format[Pagination]
   implicit val podcastFormat = Json.format[Podcast]

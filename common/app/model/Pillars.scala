@@ -1,30 +1,19 @@
 package model
 
-import play.api.libs.json._
+import enumeratum._
 
-sealed trait Pillar {
-  val name: String
+sealed trait Pillar extends EnumEntry {
+  val name: String = entryName
 }
-object Pillar {
+object Pillar extends Enum[Pillar] with PlayJsonEnum[Pillar] {
 
-  object News extends Pillar { override val name = "News" }
-  object Opinion extends Pillar { override val name = "Opinion" }
-  object Sport extends Pillar { override val name = "Sport" }
-  object Arts extends Pillar { override val name = "Arts" }
-  object Lifestyle extends Pillar { override val name = "Lifestyle" }
+  val values = findValues
 
-  implicit val format: Format[Pillar] = new Format[Pillar] {
-    override def reads(json: JsValue): JsResult[Pillar] = json match {
-      case JsString(News.name) => JsSuccess(News)
-      case JsString(Opinion.name) => JsSuccess(Opinion)
-      case JsString(Sport.name) => JsSuccess(Sport)
-      case JsString(Arts.name) => JsSuccess(Arts)
-      case JsString(Lifestyle.name) => JsSuccess(Lifestyle)
-      case _ => JsError(s"Unknown pillar: '$json'")
-    }
-
-    override def writes(o: Pillar): JsValue = JsString(o.name)
-  }
+  case object News extends Pillar
+  case object Opinion extends Pillar
+  case object Sport extends Pillar
+  case object Arts extends Pillar
+  case object Lifestyle extends Pillar
 }
 
 object Pillars {
