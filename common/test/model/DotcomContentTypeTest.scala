@@ -1,7 +1,7 @@
 package model
 
 import org.scalatest.{FlatSpec, Matchers}
-import play.api.libs.json.Json
+import play.api.libs.json.{JsResultException, Json}
 
 class DotcomContentTypeTest extends FlatSpec with Matchers {
 
@@ -28,6 +28,10 @@ class DotcomContentTypeTest extends FlatSpec with Matchers {
       DotcomContentType.Identity
     )
     Json.parse("""["Index", "Network Front", "userid"]""").as[Seq[DotcomContentType]] should be(expectedTypes)
+  }
+
+  "Unknown type" should "throw an error when being decoded from json" in {
+    an[JsResultException] should be thrownBy(Json.parse(""""I don't exist"""").as[DotcomContentType])
   }
 
 }
