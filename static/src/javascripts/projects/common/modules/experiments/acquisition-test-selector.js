@@ -14,7 +14,7 @@ import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/te
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { acquisitionsEpicParadise } from 'common/modules/experiments/tests/acquisitions-epic-paradise';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
-import { acquisitionsEpicUSGunCampaignPayingMembers} from "common/modules/experiments/tests/acquisitions-epic-us-gun-campaign-paying-members";
+import { acquisitionsEpicUSGunCampaignPayingMembers } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign-paying-members';
 
 /**
  * acquisition tests in priority order (highest to lowest)
