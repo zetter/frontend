@@ -83,9 +83,6 @@
     .content__meta-container--email {
         padding-top: $gs-baseline/2;
     }
-    .byline {
-        display: none;
-    }
     .content__meta-footer .byline {
         @include mq(desktop) {
             width: gs-span(7);
