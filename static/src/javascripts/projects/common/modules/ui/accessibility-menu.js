@@ -68,7 +68,7 @@ class DropDown extends Component<{}, *> {
                 'a11y-low-contrast',
                 `
                     body {
-                        background-color: red;
+                        background-color: #fafac8;
                     }
                 `
             );
@@ -110,7 +110,7 @@ class DropDown extends Component<{}, *> {
                             type="checkbox"
                             onChange={this.toggleLowContrast.bind(this)}
                         />
-                        Yellow Background
+                        Low Contrast
                     </label>
                 </li>
                 <li className="dropdown-menu__item">
