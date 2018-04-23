@@ -49,8 +49,10 @@ class DropDown extends Component {
         if (this.state.lowContrast) {
             const lowContrastStyles = document.getElementsByClassName('a11y-low-contrast')[0];
 
-            lowContrastStyles.parent.removeChild(lowContrastStyles);
-            this.setState('lowContrast', false);
+            lowContrastStyles.parentNode.removeChild(lowContrastStyles);
+            this.setState({
+                lowContrast: false,
+            });
         } else {
             const lowContrastStyles = document.createElement('style');
 
@@ -61,7 +63,9 @@ class DropDown extends Component {
                 }
             `;
             $('head').append(lowContrastStyles);
-            this.setState('lowContrast', true);
+            this.setState({
+                lowContrast: true,
+            });
         }
 
     }
