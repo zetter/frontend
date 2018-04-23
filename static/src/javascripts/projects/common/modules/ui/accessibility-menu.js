@@ -17,6 +17,11 @@ type MenuTogglePropTypes = {
     toggle: (open: boolean) => void,
 };
 
+type DropDownState = {
+    lowContast: boolean,
+    nightMode: boolean,
+};
+
 // ----- Functions ----- //
 
 const addStyle = (className: string, rules: string) => {
@@ -49,11 +54,12 @@ const MenuToggle = (props: MenuTogglePropTypes) => {
     );
 };
 
-class DropDown extends Component<{}, *> {
+class DropDown extends Component<{}, DropDownState> {
     constructor() {
         super();
         this.state = {
             lowContrast: false,
+            nightMode: false,
         };
     }
 
@@ -78,6 +84,33 @@ class DropDown extends Component<{}, *> {
         }
     }
 
+    toggleNightMode() {
+        if (this.state.nightMode) {
+            removeStyle('a11y-night-mode');
+            this.setState({
+                nightMode: false,
+            });
+        } else {
+            addStyle(
+                'a11y-night-mode',
+                `
+                    body{
+                        background-color: #121212;
+                    }
+                    .content, .content__standfirst {
+                        color: #999 !important;
+                    }
+                    .u-underline {
+                        text-decoration-color: #999 !important;
+                    }
+                `
+            );
+            this.setState({
+                nightMode: true,
+            });
+        }
+    }
+
     render() {
         if (!this.props.isOpen) {
             return <span />;
@@ -89,7 +122,11 @@ class DropDown extends Component<{}, *> {
                     <label
                         className="dropdown-menu__title"
                         htmlFor="a11y-menu-night">
-                        <input id="a11y-menu-night" type="checkbox" />
+                        <input
+                            id="a11y-menu-night"
+                            type="checkbox"
+                            onChange={this.toggleNightMode.bind(this)}
+                        />
                         Night Mode
                     </label>
                 </li>
