@@ -67,7 +67,7 @@ class DropDown extends Component {
     }
 
     render() {
-        if (!props.isOpen) {
+        if (!this.props.isOpen) {
             return <span />;
         }
 
