@@ -24,7 +24,9 @@ type MenuPropTypes = {
 // ----- Components ----- //
 
 const MenuToggle = (props: MenuTogglePropTypes) => {
-    const onClick = () => props.toggle(!props.isOpen);
+    const onClick = () => {
+        props.toggle(!props.isOpen);
+    };
 
     return (
         <a
@@ -65,6 +67,10 @@ class DropDown extends Component {
     }
 
     render() {
+        if (!props.isOpen) {
+            return <span />;
+        }
+
         return (<ul className="dropdown-menu dropdown-menu--open">
             <li className="dropdown-menu__item">
                 <label className="dropdown-menu__title" htmlFor="a11y-menu-night">
@@ -106,32 +112,36 @@ class DropDown extends Component {
     }
 }
 
+class AccessibilityMenu extends React.Component<{}, State> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpen: false,
+        };
+    }
 
+    toggle(isOpen: boolean) {
+        this.setState({ isOpen });
+    }
 
-const AccessibilityMenu = (props: MenuTogglePropTypes) => (
-    <div>
-        <MenuToggle isOpen={props.isOpen} toggle={props.toggle} />
-        <DropDown isOpen={props.isOpen} />
-    </div>
-);
+    render() {
+        return (
+            <div>
+                <MenuToggle
+                    isOpen={this.state.isOpen}
+                    toggle={this.toggle.bind(this)}
+                />
+                <DropDown isOpen={this.state.isOpen} />
+            </div>
+        );
+    }
+}
 
 const initAccessibilityMenu = () => {
     const a11yMenu = document.getElementById('a11y-menu');
 
     if (a11yMenu) {
-        const state: State = {
-            isOpen: false,
-        };
-
-        render(
-            <AccessibilityMenu
-                isOpen={state.isOpen}
-                toggle={(isOpen: boolean) => {
-                    state.isOpen = isOpen;
-                }}
-            />,
-            a11yMenu
-        );
+        render(<AccessibilityMenu />, a11yMenu);
     }
 };
 
