@@ -68,6 +68,21 @@ const settings: {
             }
         `,
     },
+    dyslexiaFont: {
+        labelText: 'Dyslexia Font',
+        css: `
+            body{
+                font-family: OpenDyslexic !important;
+            }
+            .content, .content__standfirst {
+                font-family: OpenDyslexic !important;
+                line-height: 25px !important;
+            }
+            .content__article-body > p {
+                line-height: 25px !important;
+            }
+        `,
+    },
 };
 
 // ----- Functions ----- //
@@ -149,6 +164,7 @@ class AccessibilityMenu extends React.Component<{}, State> {
             isOpen: false,
             lowContrast: false,
             nightMode: false,
+            dyslexicFont: false,
         };
     }
 
