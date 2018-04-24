@@ -2,13 +2,20 @@
 
 // ----- Imports ----- //
 
-import React, { Component } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import $ from 'lib/$';
 
 // ----- Types ----- //
 
-type State = {
+type A11ySettings = {
+    lowContrast: boolean,
+    nightMode: boolean,
+};
+
+type A11ySettingName = $Keys<A11ySettings>;
+
+type State = A11ySettings & {
     isOpen: boolean,
 };
 
@@ -17,9 +24,50 @@ type MenuTogglePropTypes = {
     toggle: (open: boolean) => void,
 };
 
-type DropDownState = {
-    lowContast: boolean,
-    nightMode: boolean,
+type DropDownItemPropTypes = {
+    onChange: () => void,
+    checked: boolean,
+    id: string,
+    text: string,
+};
+
+type DropDownPropTypes = {
+    isOpen: boolean,
+    toggleSetting: A11ySettingName => void,
+    getSetting: A11ySettingName => boolean,
+    settings: A11ySettingName[],
+};
+
+// ----- CSS ----- //
+
+const settings: {
+    [A11ySettingName]: {
+        labelText: string,
+        css: string,
+    },
+} = {
+    lowContrast: {
+        labelText: 'Low Contrast',
+        css: `
+            body {
+                background-color: #fafac8;
+            }
+        `,
+    },
+    nightMode: {
+        labelText: 'Night Mode',
+        css: `
+            body{
+                background-color: #121212;
+            }
+            .content, .content__standfirst {
+                color: #999 !important;
+            }
+            .u-underline {
+                text-decoration-color: #999 !important;
+            }
+        `,
+    },
 };
 
 // ----- Functions ----- //
@@ -38,148 +86,81 @@ const removeStyle = (className: string) => {
     if (elem && elem.parentNode) elem.parentNode.removeChild(elem);
 };
 
-// ----- Components ----- //
-
-const MenuToggle = (props: MenuTogglePropTypes) => {
-    const onClick = () => {
-        props.toggle(!props.isOpen);
-    };
-
-    return (
-        <a
-            className="top-bar__item--dropdown hide-until-desktop js-a11y-toggle"
-            onClick={onClick}>
-            Accessibility
-        </a>
-    );
+const toggle = (setting: A11ySettingName, state: State, setState: Function) => {
+    if (state[setting]) {
+        removeStyle(`a11y-${setting}`);
+        setState({ [setting]: false });
+    } else {
+        addStyle(`a11y-${setting}`, settings[setting].css);
+        setState({ [setting]: true });
+    }
 };
 
-class DropDown extends Component<{}, DropDownState> {
-    constructor() {
-        super();
-        this.state = {
-            lowContrast: false,
-            nightMode: false,
-        };
+// ----- Components ----- //
+
+const MenuToggle = (props: MenuTogglePropTypes) => (
+    <a
+        className="top-bar__item--dropdown hide-until-desktop js-a11y-toggle"
+        onClick={() => props.toggle(!props.isOpen)}>
+        Accessibility
+    </a>
+);
+
+const DropDownItem = (props: DropDownItemPropTypes) => (
+    <li className="dropdown-menu__item">
+        <label
+            className="dropdown-menu__title"
+            htmlFor={`a11y-menu-${props.id}`}>
+            <input
+                id={`a11y-menu-${props.id}`}
+                type="checkbox"
+                onChange={props.onChange}
+                checked={props.checked}
+            />
+            {props.text}
+        </label>
+    </li>
+);
+
+const DropDown = (props: DropDownPropTypes) => {
+    if (!props.isOpen) {
+        return <span />;
     }
 
-    toggleLowContrast() {
-        if (this.state.lowContrast) {
-            removeStyle('a11y-low-contrast');
-            this.setState({
-                lowContrast: false,
-            });
-        } else {
-            addStyle(
-                'a11y-low-contrast',
-                `
-                    body {
-                        background-color: #fafac8;
-                    }
-                `
-            );
-            this.setState({
-                lowContrast: true,
-            });
-        }
-    }
-
-    toggleNightMode() {
-        if (this.state.nightMode) {
-            removeStyle('a11y-night-mode');
-            this.setState({
-                nightMode: false,
-            });
-        } else {
-            addStyle(
-                'a11y-night-mode',
-                `
-                    body{
-                        background-color: #121212;
-                    }
-                    .content, .content__standfirst {
-                        color: #999 !important;
-                    }
-                    .u-underline {
-                        text-decoration-color: #999 !important;
-                    }
-                `
-            );
-            this.setState({
-                nightMode: true,
-            });
-        }
-    }
-
-    render() {
-        if (!this.props.isOpen) {
-            return <span />;
-        }
-
-        return (
-            <ul className="dropdown-menu dropdown-menu--open">
-                <li className="dropdown-menu__item">
-                    <label
-                        className="dropdown-menu__title"
-                        htmlFor="a11y-menu-night">
-                        <input
-                            id="a11y-menu-night"
-                            type="checkbox"
-                            onChange={this.toggleNightMode.bind(this)}
-                        />
-                        Night Mode
-                    </label>
-                </li>
-                <li className="dropdown-menu__item">
-                    <label
-                        className="dropdown-menu__title"
-                        htmlFor="a11y-menu-font">
-                        <input id="a11y-menu-font" type="checkbox" />
-                        Readable Font
-                    </label>
-                </li>
-                <li className="dropdown-menu__item">
-                    <label
-                        className="dropdown-menu__title"
-                        htmlFor="a11y-menu-background">
-                        <input
-                            id="a11y-menu-background"
-                            type="checkbox"
-                            onChange={this.toggleLowContrast.bind(this)}
-                        />
-                        Low Contrast
-                    </label>
-                </li>
-                <li className="dropdown-menu__item">
-                    <label
-                        className="dropdown-menu__title"
-                        htmlFor="a11y-menu-lineheight">
-                        <input id="a11y-menu-lineheight" type="checkbox" />
-                        Line Height
-                    </label>
-                </li>
-                <li className="dropdown-menu__item">
-                    <label
-                        className="dropdown-menu__title"
-                        htmlFor="a11y-menu-animation">
-                        <input id="a11y-menu-animation" type="checkbox" />
-                        Reduce Animation
-                    </label>
-                </li>
-            </ul>
-        );
-    }
-}
+    return (
+        <ul className="dropdown-menu dropdown-menu--open">
+            {props.settings.map(setting => (
+                <DropDownItem
+                    onChange={() => props.toggleSetting(setting)}
+                    checked={props.getSetting(setting)}
+                    id={setting}
+                    text={settings[setting].labelText}
+                    key={setting}
+                />
+            ))}
+        </ul>
+    );
+};
 
 class AccessibilityMenu extends React.Component<{}, State> {
     constructor(props) {
         super(props);
         this.state = {
             isOpen: false,
+            lowContrast: false,
+            nightMode: false,
         };
     }
 
-    toggle(isOpen: boolean) {
+    getSetting(setting: A11ySettingName): boolean {
+        return this.state[setting];
+    }
+
+    toggleSetting(setting: A11ySettingName) {
+        toggle(setting, this.state, this.setState.bind(this));
+    }
+
+    toggleMenu(isOpen: boolean) {
         this.setState({ isOpen });
     }
 
@@ -188,9 +169,14 @@ class AccessibilityMenu extends React.Component<{}, State> {
             <div>
                 <MenuToggle
                     isOpen={this.state.isOpen}
-                    toggle={this.toggle.bind(this)}
+                    toggle={this.toggleMenu.bind(this)}
                 />
-                <DropDown isOpen={this.state.isOpen} />
+                <DropDown
+                    isOpen={this.state.isOpen}
+                    toggleSetting={this.toggleSetting.bind(this)}
+                    getSetting={this.getSetting.bind(this)}
+                    settings={Object.keys(settings)}
+                />
             </div>
         );
     }
