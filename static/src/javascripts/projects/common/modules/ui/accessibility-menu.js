@@ -81,6 +81,9 @@ const settings: {
             .content__article-body > p {
                 line-height: 25px !important;
             }
+            .rich-link .rich-link__header {
+                line-height: 30px; 
+            }
         `,
     },
 };
@@ -114,11 +117,12 @@ const toggle = (setting: A11ySettingName, state: State, setState: Function) => {
 // ----- Components ----- //
 
 const MenuToggle = (props: MenuTogglePropTypes) => (
-    <a
+    <button
         className="top-bar__item--dropdown hide-until-desktop js-a11y-toggle"
-        onClick={() => props.toggle(!props.isOpen)}>
+        onClick={() => props.toggle(!props.isOpen)}
+        id="a11y-menu-button">
         Accessibility
-    </a>
+    </button>
 );
 
 const DropDownItem = (props: DropDownItemPropTypes) => (

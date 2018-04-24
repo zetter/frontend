@@ -28,6 +28,11 @@
     }
 }
 
+.top-bar__item--button button {
+    background: inherit;
+    border: 0;
+}
+
 .top-bar__item--dropdown {
     cursor: pointer;
 
