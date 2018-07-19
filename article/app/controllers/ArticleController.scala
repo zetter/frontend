@@ -89,4 +89,12 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   }
 
+  def ampArray(): Action[AnyContent] = {
+    Action.async { implicit request =>
+      Future(
+        Ok("[{}]")
+      )
+    }
+  }
+
 }

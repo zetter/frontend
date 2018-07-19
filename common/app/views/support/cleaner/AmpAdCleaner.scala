@@ -87,6 +87,7 @@ object AmpAdCleaner {
 case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends HtmlCleaner {
 
   def adAfter(element: Element): Element = {
+
     val ampAd = <amp-ad
                    data-npa-on-unknown-consent="true"
                    width="300" height="250"
@@ -97,6 +98,23 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
                    rtc-config={AmpAdRtcConfig().toJsonString}
                 ></amp-ad>
 
+    val ampAdWithListEnclosure = <amp-list width="auto"
+                                height="250"
+                                layout="fixed-height"
+                                src="/amp/amp-array.json">
+                                <template type="amp-mustache">
+                                    <amp-ad
+                                       data-npa-on-unknown-consent="true"
+                                       width="300" height="250"
+                                       type="doubleclick"
+                                       data-loading-strategy="prefer-viewability-over-views"
+                                       json={AmpAd(article, uri, edition.id.toLowerCase()).toString()}
+                                       data-slot={AmpAdDataSlot(article).toString()}
+                                       rtc-config={AmpAdRtcConfig().toJsonString}
+                                    ></amp-ad>
+                                </template>
+                             </amp-list>
+
     val ampAdString = {
       // data-block-on-consent should not have ANY value
       // according to https://www.ampproject.org/docs/reference/components/amp-consent
@@ -106,9 +124,8 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
       // or gather it in AMP.
       // ( ampAd % Attribute(null, "data-block-on-consent", "PLEASEREMOVEME", Null) ).toString().replaceFirst("=\"PLEASEREMOVEME\"", "")
       // Falling back to
-      ampAd.toString()
+      ampAdWithListEnclosure.toString()
     }
-
     element.after( "<div class=\"amp-ad-container\">" ++ ampAdString ++ "</div>" )
   }
 
