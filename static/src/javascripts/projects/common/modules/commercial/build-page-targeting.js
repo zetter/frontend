@@ -202,8 +202,10 @@ const buildPageTargeting = once(
             return target;
         });
 
-        // third-parties wish to access our page targeting, before the googletag script is loaded.
-        page.appNexusPageTargeting = buildAppNexusTargeting(pageTargeting);
+        if (!adFree) {
+            // third-parties wish to access our page targeting, before the googletag script is loaded.
+            page.appNexusPageTargeting = buildAppNexusTargeting(pageTargeting);
+        }
 
         // This can be removed once we get sign-off from third parties who prefer to use appNexusPageTargeting.
         page.pageAdTargeting = pageTargeting;

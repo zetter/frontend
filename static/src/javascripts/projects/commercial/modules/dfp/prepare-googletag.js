@@ -119,27 +119,36 @@ const setPublisherProvidedId = (): void => {
 
 export const init = (start: () => void, stop: () => void): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {
-        addTag(
-            dfpEnv.externalDemand === 'none'
-                ? 'waterfall'
-                : dfpEnv.externalDemand
-        );
+        if (!commercialFeatures.adFree) {
+            addTag(
+                (dfpEnv.externalDemand === 'none')
+                    ? 'waterfall'
+                    : dfpEnv.externalDemand
+            );
+        }
 
         start();
 
-        // note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
-        // it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
-        // fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
-        window.googletag.cmd.push(
-            setDfpListeners,
-            setPersonalisedAds,
-            setPageTargeting,
-            setPublisherProvidedId,
-            refreshOnResize,
-            () => {
-                fillAdvertSlots().then(stop);
-            }
-        );
+        if (commercialFeatures.adFree) {
+            // for ad-free mode, we rely on DFP targeting solely for ad-free video
+            window.googletag.cmd.push(
+                setPageTargeting
+            );
+        } else {
+            // note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
+            // it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
+            // fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
+            window.googletag.cmd.push(
+                setDfpListeners,
+                setPersonalisedAds,
+                setPageTargeting,
+                setPublisherProvidedId,
+                refreshOnResize,
+                () => {
+                    fillAdvertSlots().then(stop);
+                }
+            );
+        }
 
         // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
         return loadScript(config.libs.googletag, { async: false });

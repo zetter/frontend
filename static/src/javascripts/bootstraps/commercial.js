@@ -31,30 +31,41 @@ import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { initDFPEpicSlot } from 'commercial/modules/epic/dfp-epic-slot';
 
-const commercialModules: Array<Array<any>> = [
+const adFreeOnlyModules: Array<Array<any>> = [
+    ['cm-adFreeSlotRemove', adFreeSlotRemove],
+];
+
+const commonModules: Array<Array<any>> = [
+    ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-prepare-cmp', initCmpService],
     ['cm-track-cmp-consent', trackCmpConsent],
-    ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-thirdPartyTags', initThirdPartyTags],
     ['cm-checkDispatcher', initCheckDispatcher],
 ];
 
-if (!commercialFeatures.adFree) {
-    commercialModules.push(
-        ['cm-prepare-googletag', prepareGoogletag, true],
-        ['cm-closeDisabledSlots', closeDisabledSlots],
-        ['cm-dfp-epic', initDFPEpicSlot],
-        ['cm-highMerch', initHighMerch],
-        ['cm-prepare-sonobi-tag', prepareSonobiTag, true],
-        ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
-        ['cm-articleBodyAdverts', initArticleBodyAdverts, true],
-        ['cm-liveblogAdverts', initLiveblogAdverts, true],
-        ['cm-stickyTopBanner', initStickyTopBanner],
-        ['cm-paidContainers', paidContainers],
-        ['cm-paidforBand', initPaidForBand],
-        ['cm-commentAdverts', initCommentAdverts],
-        ['cm-carrot', initCarrotTrafficDriver]
-    );
+const fullAdModules: Array<Array<any>> = [
+    ['cm-closeDisabledSlots', closeDisabledSlots],
+    ['cm-dfp-epic', initDFPEpicSlot],
+    ['cm-highMerch', initHighMerch],
+    ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
+    ['cm-articleBodyAdverts', initArticleBodyAdverts, true],
+    ['cm-liveblogAdverts', initLiveblogAdverts, true],
+    ['cm-stickyTopBanner', initStickyTopBanner],
+    ['cm-paidContainers', paidContainers],
+    ['cm-paidforBand', initPaidForBand],
+    ['cm-commentAdverts', initCommentAdverts],
+    ['cm-carrot', initCarrotTrafficDriver],
+];
+
+const commercialModules: Array<Array<any>> = [];
+
+if (commercialFeatures.adFree) {
+    commercialModules.push(adFreeOnlyModules.concat(commonModules));
+} else {
+    // because sonobi should be before googletag
+    const head = [['cm-prepare-sonobi-tag', prepareSonobiTag, true],];
+    const tail = commonModules.concat(fullAdModules);
+    commercialModules.push(head.concat(tail));
 }
 
 const loadHostedBundle = (): Promise<void> => {
