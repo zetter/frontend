@@ -121,7 +121,7 @@ export const init = (start: () => void, stop: () => void): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {
         if (!commercialFeatures.adFree) {
             addTag(
-                (dfpEnv.externalDemand === 'none')
+                dfpEnv.externalDemand === 'none'
                     ? 'waterfall'
                     : dfpEnv.externalDemand
             );
@@ -131,9 +131,7 @@ export const init = (start: () => void, stop: () => void): Promise<void> => {
 
         if (commercialFeatures.adFree) {
             // for ad-free mode, we rely on DFP targeting solely for ad-free video
-            window.googletag.cmd.push(
-                setPageTargeting
-            );
+            window.googletag.cmd.push(setPageTargeting);
         } else {
             // note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
             // it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are

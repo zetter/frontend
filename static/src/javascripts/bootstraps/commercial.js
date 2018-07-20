@@ -63,7 +63,7 @@ if (commercialFeatures.adFree) {
     commercialModules.push(adFreeOnlyModules.concat(commonModules));
 } else {
     // because sonobi should be before googletag
-    const head = [['cm-prepare-sonobi-tag', prepareSonobiTag, true],];
+    const head = [['cm-prepare-sonobi-tag', prepareSonobiTag, true]];
     const tail = commonModules.concat(fullAdModules);
     commercialModules.push(head.concat(tail));
 }
