@@ -9,6 +9,7 @@ import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { init as initCmpService } from 'commercial/modules/cmp/cmp';
+import { init as initLotameCmp } from 'commercial/modules/cmp/lotame-cmp';
 import { trackConsent as trackCmpConsent } from 'commercial/modules/cmp/consent-tracker';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as prepareSonobiTag } from 'commercial/modules/dfp/prepare-sonobi-tag';
@@ -41,6 +42,7 @@ const commonModules: Array<Array<any>> = [
     ['cm-track-cmp-consent', trackCmpConsent],
     ['cm-thirdPartyTags', initThirdPartyTags],
     ['cm-checkDispatcher', initCheckDispatcher],
+    ['cm-lotame-cmp', initLotameCmp],
 ];
 
 const fullAdModules: Array<Array<any>> = [
