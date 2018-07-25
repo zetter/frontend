@@ -7,6 +7,7 @@ import play.api.mvc.RequestHeader
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
+    AudioHideImage,
     AudioPageChange,
     CommercialClientLogging,
     OrielParticipation,
@@ -53,6 +54,14 @@ object AudioPageChange extends Experiment(
   name = "audio-page-change",
   description = "Show a different version of the audio page to certain people",
   owners = Owner.group(SwitchGroup.Journalism),
-  sellByDate = new LocalDate(2018, 7, 20),
+  sellByDate = new LocalDate(2018, 8, 20),
+  participationGroup = Perc0A
+)
+
+object AudioHideImage extends Experiment(
+  name = "audio-hide-image",
+  description = "Test the audio player without an image",
+  owners = Owner.group(SwitchGroup.Journalism),
+  sellByDate = new LocalDate(2018, 7, 31),
   participationGroup = Perc50
 )
