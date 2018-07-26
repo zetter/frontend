@@ -11,6 +11,7 @@ import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { init as initCmpService } from 'commercial/modules/cmp/cmp';
 import { init as initLotameCmp } from 'commercial/modules/cmp/lotame-cmp';
 import { trackConsent as trackCmpConsent } from 'commercial/modules/cmp/consent-tracker';
+import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as prepareSonobiTag } from 'commercial/modules/dfp/prepare-sonobi-tag';
 import { init as initCarrotTrafficDriver } from 'commercial/modules/carrot-traffic-driver';
@@ -46,7 +47,7 @@ const commonModules: Array<Array<any>> = [
 ];
 
 const fullAdModules: Array<Array<any>> = [
-    ['cm-closeDisabledSlots', closeDisabledSlots],
+    ['cm-prepare-adverification', prepareAdVerification, true],    ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-dfp-epic', initDFPEpicSlot],
     ['cm-highMerch', initHighMerch],
     ['cm-articleAsideAdverts', initArticleAsideAdverts, true],

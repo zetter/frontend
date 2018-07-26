@@ -82,7 +82,7 @@ trait ABTestSwitches {
     "See if there is any difference in annualised value between serving the Epic natively vs DFP",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 7, 25),
+    sellByDate = new LocalDate(2018, 7, 26),
     exposeClientSide = true
   )
 
@@ -140,6 +140,16 @@ trait ABTestSwitches {
     ABTests,
     "ab-commercial-prebid-safeframe",
     "Test the impact of serving prebid ads in safeframes",
+    owners = Seq(Owner.withGithub("jeteve")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-commercial-ad-verification",
+    "Test the impact of verifiyng ads",
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
