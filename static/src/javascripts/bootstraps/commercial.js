@@ -33,10 +33,6 @@ import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { initDFPEpicSlot } from 'commercial/modules/epic/dfp-epic-slot';
 
-const adFreeOnlyModules: Array<Array<any>> = [
-    ['cm-adFreeSlotRemove', adFreeSlotRemove],
-];
-
 const commonModules: Array<Array<any>> = [
     ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-prepare-cmp', initCmpService],
@@ -64,12 +60,16 @@ const fullAdModules: Array<Array<any>> = [
 const commercialModules: Array<Array<any>> = [];
 
 if (commercialFeatures.adFree) {
-    commercialModules.push(adFreeOnlyModules.concat(commonModules));
+    commercialModules.push(['cm-adFreeSlotRemove', adFreeSlotRemove]);
+    commonModules.forEach(module => {
+        commercialModules.push(module);
+    });
 } else {
     // because sonobi should be before googletag
-    const head = [['cm-prepare-sonobi-tag', prepareSonobiTag, true]];
-    const tail = commonModules.concat(fullAdModules);
-    commercialModules.push(head.concat(tail));
+    commercialModules.push(['cm-prepare-sonobi-tag', prepareSonobiTag, true]);
+    commonModules.concat(fullAdModules).forEach(module => {
+        commercialModules.push(module);
+    });
 }
 
 const loadHostedBundle = (): Promise<void> => {
