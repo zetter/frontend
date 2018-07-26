@@ -47,7 +47,8 @@ const commonModules: Array<Array<any>> = [
 ];
 
 const fullAdModules: Array<Array<any>> = [
-    ['cm-prepare-adverification', prepareAdVerification, true],    ['cm-closeDisabledSlots', closeDisabledSlots],
+    ['cm-prepare-adverification', prepareAdVerification, true],
+    ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-dfp-epic', initDFPEpicSlot],
     ['cm-highMerch', initHighMerch],
     ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
