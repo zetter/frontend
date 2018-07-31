@@ -31,7 +31,6 @@ import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
-import { initDFPEpicSlot } from 'commercial/modules/epic/dfp-epic-slot';
 
 const commonModules: Array<Array<any>> = [
     ['cm-prepare-googletag', prepareGoogletag, true],
@@ -45,7 +44,6 @@ const commonModules: Array<Array<any>> = [
 const fullAdModules: Array<Array<any>> = [
     ['cm-prepare-adverification', prepareAdVerification, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
-    ['cm-dfp-epic', initDFPEpicSlot],
     ['cm-highMerch', initHighMerch],
     ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
     ['cm-articleBodyAdverts', initArticleBodyAdverts, true],
