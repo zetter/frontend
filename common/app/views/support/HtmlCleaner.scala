@@ -805,11 +805,12 @@ object GarnettQuoteCleaner extends HtmlCleaner {
 }
 
 case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean],
-  contentType: String, appendDisclaimer: Option[Boolean] = None) extends HtmlCleaner with Logging {
+  contentType: String, appendDisclaimer: Option[Boolean] = None)(implicit request: RequestHeader) extends HtmlCleaner with Logging {
 
+  import implicits.Requests._
   override def clean(document: Document): Document = {
-    if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn,
-      sectionId, showAffiliateLinks, affiliateLinkSections)) {
+    if (AffiliateLinks.isSwitchedOn && !request.isAdFree && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn,
+      sectionId, showAffiliateLinks, affiliateLinkSections )) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
     } else document
   }
