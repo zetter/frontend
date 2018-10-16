@@ -90,7 +90,11 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
         case JsonFormat if request.isGuui => common.renderJson(getGuuiJson(article), article)
         case JsonFormat => common.renderJson(getJson(article), article)
         case EmailFormat => common.renderEmail(ArticleEmailHtmlPage.html(article), article)
-        case HtmlFormat => common.renderHtml(ArticleHtmlPage.html(article), article)
+        case HtmlFormat => {
+          val foo = common.renderHtml(ArticleHtmlPage.html(article), article)
+          log.info("haberisPreload " + foo.header.headers.get("link").toString())
+          foo
+        }
         case AmpFormat => common.renderHtml(views.html.articleAMP(article), article)
       }
     }
