@@ -1,5 +1,17 @@
 // @flow
 
+export type Config = {
+    get: (path: string, defaultValue: any) => any,
+    set: (path: string, value: any) => void,
+    hasTone: () => boolean,
+    hasSeries: () => boolean,
+    referencesOfType: (name: string) => Array<string>,
+    referenceOfType: (name: string) => string,
+    webPublicationDateAsUrlPart: () => ?string,
+    dateFromSlug: () => ?string,
+    config: {},
+};
+
 // This should be the only module accessing the window config object directly
 // because this is the one that gets imported to all other modules
 // eslint-disable-next-line guardian-frontend/global-config
