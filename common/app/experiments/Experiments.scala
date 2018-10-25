@@ -12,7 +12,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     OrielParticipation,
     OldTLSSupportDeprecation,
     DotcomponentsRendering,
-    HeaderSubscribeUKTest
+    HeaderSubscribeUKTest,
+    IdentityConsentJourney,
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -48,6 +49,14 @@ object AudioPageChange extends Experiment(
   owners = Owner.group(SwitchGroup.Journalism),
   sellByDate = new LocalDate(2018, 12, 5),
   participationGroup = Perc0B
+)
+
+object IdentityConsentJourney extends Experiment(
+  name = "identity-consent-journey",
+  description = "Show a different version of the consent journey page to certain people",
+  owners = Owner.group(SwitchGroup.Identity),
+  sellByDate = new LocalDate(2018, 11, 7),
+  participationGroup = Perc50
 )
 
 object DotcomponentsRendering extends Experiment(

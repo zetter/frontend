@@ -3,6 +3,8 @@ package controllers.editprofile
 import actions.AuthenticatedActions._
 import com.gu.identity.model._
 import com.typesafe.play.cachecontrol.CacheDirectives
+import controllers.UpsellPages.ConfirmEmailThankYou
+import controllers.{IdentityControllers, UpsellController}
 import idapiclient.UserUpdateDTO
 import model.{IdentityPage, NoCache}
 import pages.IdentityHtmlPage
@@ -11,10 +13,13 @@ import play.api.data.Forms.{mapping, nonEmptyText, single, text}
 import play.api.data.validation.Constraints
 import play.api.i18n.MessagesProvider
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, DiscardingCookie, Result}
+import play.api.mvc._
 import services.PlaySigninService
 import utils.ConsentOrder.userWithOrderedConsents
 import utils.ConsentsJourneyType.AnyConsentsJourney
+import experiments.{ActiveExperiments, IdentityConsentJourney}
+import play.mvc.Http.{Request, RequestHeader}
+import controllers.editprofile
 
 import scala.concurrent.Future
 
@@ -108,22 +113,22 @@ trait ConsentsJourney
   }
 
   private def displayConsentJourneyForm(
-    page: ConsentJourneyPage,
-    consentHint: Option[String]): Action[AnyContent] =
-
-
-      csrfAddToken {
-        consentAuthWithIdapiUserWithEmailValidation.async { implicit request =>
-          consentJourneyView(
-            page = page,
-            journey = page.journey,
-            forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
-            request.user,
-            consentHint
-          )
-
+     page: ConsentJourneyPage,
+     consentHint: Option[String]): Action[AnyContent] = csrfAddToken {
+    consentAuthWithIdapiUserWithEmailValidation.async { implicit request =>
+      if (ActiveExperiments.isParticipating(IdentityConsentJourney)) {
+        consentJourneyView(
+          page = page,
+          journey = page.journey,
+          forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
+          request.user,
+          consentHint
+        )
       }
+      else
+        Future.successful(Redirect(s"/confirm-email/thank-you"))
     }
+  }
 
   private def displayConsentComplete(
     page: ConsentJourneyPage,
