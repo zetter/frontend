@@ -117,6 +117,9 @@ trait ConsentsJourney
      consentHint: Option[String]): Action[AnyContent] = csrfAddToken {
     consentAuthWithIdapiUserWithEmailValidation.async { implicit request =>
       if (ActiveExperiments.isParticipating(IdentityConsentJourney)) {
+        Future.successful(Redirect(s"/confirm-email/thank-you"))
+      }
+      else
         consentJourneyView(
           page = page,
           journey = page.journey,
@@ -124,9 +127,6 @@ trait ConsentsJourney
           request.user,
           consentHint
         )
-      }
-      else
-        Future.successful(Redirect(s"/confirm-email/thank-you"))
     }
   }
 
