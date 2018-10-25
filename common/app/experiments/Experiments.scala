@@ -56,7 +56,7 @@ object IdentityConsentJourney extends Experiment(
   description = "Show a different version of the consent journey page to certain people",
   owners = Owner.group(SwitchGroup.Identity),
   sellByDate = new LocalDate(2018, 11, 7),
-  participationGroup = Perc50
+  participationGroup = Perc10A
 )
 
 object DotcomponentsRendering extends Experiment(
