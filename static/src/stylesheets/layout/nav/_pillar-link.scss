@@ -32,10 +32,6 @@
         }
     }
 
-    @include mq(desktop) {
-        transition: color .3s ease-in-out;
-    }
-
     body:not(.has-page-skin) & {
         @include mq(wide) {
             font-size: 24px;
@@ -140,6 +136,6 @@
 
     &:hover,
     &:focus {
-        color: $brightness-100;
+        color: $highlight-main;
     }
 }

@@ -44,7 +44,6 @@
 
     @include mq(tablet) {
         padding: 9px ($gs-gutter / 3);
-        transition: color .3s ease-in-out;
     }
 }
 

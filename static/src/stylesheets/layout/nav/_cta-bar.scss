@@ -34,9 +34,12 @@
     margin: ($gs-baseline / 4) 0 $gs-baseline;
 
     @include mq(desktop) {
-        font-size: 32px;
-        width: gs-span(5) - $gs-gutter * 2;
+        font-size: 30px;
         margin: ($gs-baseline / 4) 0 $gs-baseline;
+    }
+
+    @include mq(leftCol) {
+        font-size: 32px;
     }
 }
 

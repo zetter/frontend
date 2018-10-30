@@ -59,7 +59,11 @@
     position: relative;
     text-align: left;
     width: 100%;
-    transition: color .3s ease-in-out;
+
+    .menu-group--membership & {
+        color: $highlight-main;
+        font-weight: 700;
+    }
 
     @include mq(tablet) {
         padding-left: $menu-spacing-left-medium;
@@ -86,8 +90,10 @@
     }
 
     .menu-group--primary > *:not(:last-child) > &,
-    &[data-link-name='nav2 : the guardian app'],
-    &[data-link-name='nav2 : facebook'] {
+    &[data-link-name='nav2 : The Guardian app'],
+    &[data-link-name='nav2 : facebook'],
+    .menu-group--footer > *:first-child &,
+    .menu-group--membership > *:first-child & {
         @include mq($until: desktop) {
             &:not([aria-expanded='true']):after {
                 background-color: $nav-border-colour;
@@ -96,8 +102,8 @@
                 display: block;
                 height: 1px;
                 left: $menu-spacing-left-small;
+                right: 0;
                 position: absolute;
-                width: 100%;
 
                 @include mq(tablet) {
                     left: $menu-spacing-left-medium;
@@ -106,12 +112,22 @@
         }
     }
 
-    &[data-link-name='nav2 : the guardian app'],
-    &[data-link-name='nav2 : facebook'] {
+    &[data-link-name='nav2 : The Guardian app'],
+    &[data-link-name='nav2 : facebook'],
+    .menu-group--footer > *:first-child & {
         @include mq($until: desktop) {
             margin-top: $gs-baseline * 2;
 
             &:after {
+                bottom: auto;
+                top: 0;
+            }
+        }
+    }
+
+    .menu-group--membership > *:first-child & {
+        @include mq($until: desktop) {
+            &:not([aria-expanded='true']):after {
                 bottom: auto;
                 top: 0;
             }
@@ -131,14 +147,6 @@
             font-size: 32px;
         }
     }
-
-    .menu-group--editions &[aria-haspopup='true'] {
-        margin-bottom: $gs-baseline;
-
-        &[aria-expanded='true'] {
-            margin-bottom: 0;
-        }
-    }
 }
 
 .menu-item--brand-extension {
@@ -149,7 +157,7 @@
 
 .menu-item__title--brand-extension {
     font-family: $f-serif-headline;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     line-height: 1.2;
 

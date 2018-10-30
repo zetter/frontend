@@ -33,9 +33,7 @@
 }
 
 .menu-group--secondary {
-    // background-color: $brightness-93;
-    background-color: darken($nav-blue, 4%);
-    // border-bottom: 1px solid $nav-border-colour;
+    background-color: darken($nav-blue, 5%);
     margin-top: 0;
     padding-top: 0;
 
@@ -44,11 +42,6 @@
         padding-bottom: 0;
         width: 100%;
     }
-}
-
-.menu-group--membership,
-.menu-group--editions {
-    background-color: $brightness-93;
 }
 
 .menu-group--membership {
@@ -61,10 +54,7 @@
     padding-bottom: 0;
 
     .menu-group {
-        background-color: darken($brightness-97, 10%);
-        .menu-item-divider {
-            background-color: darken($brightness-97, 20%);
-        }
+        background-color: darken($nav-blue, 3%);
     }
 }
 
@@ -90,12 +80,14 @@
 .menu-group--primary > .menu-item:not(:first-child),
 .menu-group--brand-extensions {
     &:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        border-left: 1px solid $nav-border-colour;
+        @include mq(desktop) {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            border-left: 1px solid $nav-border-colour;
+        }
     }
 }
 
@@ -104,9 +96,8 @@
     right: $gs-gutter + $gs-gutter / 2;
     top: -$pillar-height;
     bottom: 0;
-    padding: ($pillar-height + $gs-baseline / 2) $gs-gutter ($gs-baseline) $pillar-padding;
-    width: gs-span(2) - ($gs-gutter / 2);
-
+    padding: ($gs-baseline / 2) $gs-gutter ($gs-baseline) $pillar-padding;
+    width: 131px;
 
     body:not(.has-page-skin) & {
         @include mq(leftCol) {
@@ -114,8 +105,11 @@
         }
 
         @include mq(wide) {
-            padding-top: $gs-baseline;
             width: gs-span(4);
         }
+    }
+
+    .new-header--slim & {
+        top: $gs-baseline * 2;
     }
 }
