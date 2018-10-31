@@ -42,10 +42,6 @@
         // width fallback for browsers which don't fully support flex
         width: 20%;
         flex: 1 0 0;
-
-        &:last-child {
-            margin-right: 0;
-        }
     }
 
     a {

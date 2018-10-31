@@ -96,7 +96,7 @@
     right: $gs-gutter + $gs-gutter / 2;
     top: -$pillar-height;
     bottom: 0;
-    padding: ($gs-baseline / 2) $gs-gutter ($gs-baseline) $pillar-padding;
+    padding: $pillar-height $gs-gutter $gs-baseline $pillar-padding;
     width: 131px;
 
     body:not(.has-page-skin) & {
@@ -106,10 +106,7 @@
 
         @include mq(wide) {
             width: gs-span(4);
+            padding-top: 10px;
         }
-    }
-
-    .new-header--slim & {
-        top: $gs-baseline * 2;
     }
 }
