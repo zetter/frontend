@@ -12,7 +12,8 @@
 @defining(isPaidContent(page), isAdFree(request)) { case (isPaidContent, isAdFree) =>
 
 <div class="@RenderClasses(Map(
-    "l-side-margins--media" ->  !isPaidContent
+    "l-side-margins--media" ->  !isPaidContent,
+    "l-side-margins--paidfor" ->  isPaidContent
 ), "l-side-margins", "l-side-margins--flagship")">
     <article id="article" class="@RenderClasses(
         Map(
@@ -172,4 +173,3 @@
     @fragments.contentFooter(audio, page.related, "media", isPaidContent)
 </div>
 }
-

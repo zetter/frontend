@@ -180,7 +180,7 @@ object NavLinks {
   val podcasts = NavLink("Podcasts", "/podcasts")
   val pictures = NavLink("Pictures", "/inpictures")
   val newsletters = NavLink("Newsletters", "/email-newsletters")
-  val jobs = NavLink("Jobs", "https://jobs.theguardian.com")
+  val jobs = NavLink("Search jobs", "https://jobs.theguardian.com")
   val dating = NavLink("Dating", "https://soulmates.theguardian.com")
   val apps = NavLink("The Guardian app", "https://www.theguardian.com/mobile/2014/may/29/the-guardian-for-mobile-and-tablet")
   val ukMasterClasses = NavLink("Masterclasses", "https://membership.theguardian.com/masterclasses?INTCMP=masterclasses_uk_web_newheader")

@@ -97,7 +97,6 @@ body {
 }
 
 @include mq($from: 184px) {
-    .email-sub__form--footer,
     .email-sub__form--plain,
     .email-sub__form--plaindark,
     .email-sub__form--plaintone {

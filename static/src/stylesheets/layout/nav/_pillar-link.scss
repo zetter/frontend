@@ -15,6 +15,16 @@
     z-index: 1;
 
     @include mq(mobileMedium) {
+        font-size: 15.7px;
+        padding: 9px 4px 0;
+    }
+
+    @include mq($from: 370px) {
+        font-size: 16px;
+        padding: 9px 5px 0;
+    }
+
+    @include mq(mobileLandscape) {
         font-size: 18px;
         padding: 7px 4px 0;
     }

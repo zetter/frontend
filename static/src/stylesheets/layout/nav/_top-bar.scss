@@ -49,8 +49,16 @@
 
 .top-bar__commercial-items {
     position: relative;
-    display: inline-block;
-    margin-left: $gs-gutter / 2;
+    float: left;
+    margin-right: $gs-gutter / 2;
+}
+
+.top-bar__item__icon__svg {
+    fill: currentColor;
+    float: left;
+    height: 18px;
+    width: 18px;
+    margin: -1px 4px 0 0;
 }
 
 .top-bar__item__seperator {
@@ -58,7 +66,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    height: 22px;
+    height: $gs-baseline * 2;
 }
 
 .new-header__user-account-container {

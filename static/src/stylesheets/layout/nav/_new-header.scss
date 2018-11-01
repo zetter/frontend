@@ -66,11 +66,11 @@ from scrolling */
     @include mq($until: desktop) {
         position: absolute;
         right: $gs-gutter / 4;
-        top: 22px;
+        bottom: 48px;
 
         @include mq(mobileMedium) {
-            right: ($gs-gutter / 2) - 2px;
-            top: 32px;
+            right: $gs-gutter / 4;
+            bottom: -$gs-baseline / 4;
         }
 
         @include mq(mobileLandscape) {
@@ -97,14 +97,17 @@ from scrolling */
     margin-right: $veggie-burger + 12px;
     margin-bottom: $gs-baseline * 2;
 
+    @include mq(mobileMedium) {
+        margin-right: $gs-gutter / 2;
+    }
+
     @include mq(mobileLandscape) {
-        margin-right: $veggie-burger + 22px;
+        margin-right: $gs-gutter;
     }
 
     @include mq(desktop) {
         margin-top: 5px;
         margin-bottom: $gs-baseline + ($gs-baseline / 2);
-        margin-right: $gs-gutter;
         position: relative;
         z-index: $zindex-main-menu + 1;
     }
@@ -150,7 +153,7 @@ from scrolling */
     }
 
     & path:nth-child(2) {
-        fill: $brightness-7;
+        fill: $nav-blue;
     }
 }
 
@@ -181,6 +184,10 @@ from scrolling */
 
 .new-header__multiline {
     background: $brightness-100;
+
+    .footer__primary & {
+        display: none;
+    }
 
     & .gs-container:after {
         @include multiline(4, $brightness-86, bottom);

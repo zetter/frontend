@@ -81,15 +81,19 @@
         }
     }
 }
-.l-side-margins--paidgallery {
-    &:before,
-    &:after {
-        content: none;
+
+.l-side-margins--paidfor {
+    @include mq(tablet) {
+        &:after,
+        &:before {
+            border-color: $brightness-60;
+        }
     }
 }
-.l-side-margins--flagship {
-    &::before,
-    &::after {
+
+.l-side-margins--flagship  {
+    &:before,
+    &:after {
         content: none;
     }
 }
