@@ -96,7 +96,7 @@
     }
 }
 
-:not(.has-new-navigation) {
+body:not(.has-new-navigation) {
     .l-side-margins--paidgallery {
         &:after,
         &:before {
