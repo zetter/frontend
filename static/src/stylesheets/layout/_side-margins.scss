@@ -82,11 +82,13 @@
     }
 }
 
-.l-side-margins--paidfor {
-    @include mq(tablet) {
-        &:after,
-        &:before {
-            border-color: $brightness-60;
+.has-new-navigation {
+    .l-side-margins--paidfor {
+        @include mq(tablet) {
+            &:after,
+            &:before {
+                border-color: $brightness-60;
+            }
         }
     }
 }
