@@ -1,13 +1,12 @@
 .colophon {
     @include content-gutter();
     padding-bottom: $gs-baseline * 2;
-    border: 1px solid $nav-border-colour;
-    border-left: 0;
-    border-right: 0;
+    border-bottom: 1px solid $nav-border-colour;
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline / 2;
         border: 1px solid $nav-border-colour;
+        border-top: 0;
     }
 }
 

@@ -22,7 +22,7 @@
 .back-to-top__text {
     display: inline-block;
     line-height: 1;
-    padding: 10px ($gs-gutter / 4) 0 0;
+    padding: $gs-baseline ($gs-gutter / 4) 0 0;
 }
 
 .back-to-top__icon-container {
@@ -31,13 +31,13 @@
     border-radius: 100%;
     background-color: currentColor;
     cursor: pointer;
-    height: 36px;
-    width: 36px;
+    height: 42px;
+    width: 42px;
 
     .inline-arrow-up {
         position: absolute;
-        top: $gs-baseline / 2;
-        left: 6px;
+        top: 9px;
+        left: 9px;
 
         path {
             fill: $nav-blue;

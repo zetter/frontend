@@ -197,20 +197,30 @@
     .footer__email-container .email-sub__iframe {
         margin-left: 0;
         width: 100%;
-        max-width: gs-span(6);
+        max-width: gs-span(5);
+        margin-left: -$gs-gutter / 2;
+        margin-bottom: $gs-baseline;
     }
 
     .email-sub__form--footer {
-        margin-bottom: $gs-baseline;
-        padding: 0;
+        padding: 0 ($gs-gutter / 2);
 
         .email-sub__submit-button {
             @include fs-textSans(5);
             color: $nav-blue;
-            height: 36px;
+            height: 42px;
+            line-height: 40px;
             background-color: $brightness-100;
             border: 0;
+            border-radius: 21px;
+            display: block;
             margin-bottom: $gs-baseline;
+            width: 100%;
+
+            & svg {
+                fill: currentColor;
+                margin-bottom: -1px;
+            }
 
             &:hover,
             &:focus,
@@ -222,26 +232,34 @@
 
         .email-sub__text-input {
             @include fs-textSans(5);
-            background-color: rgba($brightness-100, .1);
-            border-color: rgba($brightness-100, .2);
+            background-color: rgba($brightness-100, .08);
+            border: 1px solid $nav-border-colour;
             border-radius: 0;
-            height: 36px;
+            height: 42px;
+            line-height: 42px;
             color: $brightness-100;
+            display: block;
+            padding-left: $gs-gutter / 2;
+            float: none;
+            width: 100%;
+            overflow: visible;
+            transition: box-shadow .2s ease-in-out;
 
             &:hover {
-                background-color: rgba($brightness-100, .15);
+                box-shadow: 0 0 0 3px rgba($brightness-100, .08);
             }
 
             &:active,
             &:focus {
-                background-color: rgba($brightness-100, .1);
+                box-shadow: 0 0 0 3px $highlight-main;
             }
         }
 
         .email-sub__label {
             @include fs-textSans(5);
-            line-height: 36px;
+            line-height: 41px;
             color: rgba($brightness-100, .5);
+            left: $gs-gutter / 2;
         }
     }
 }
