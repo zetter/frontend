@@ -62,6 +62,7 @@ from scrolling */
 .new-header__menu-toggle {
     display: block;
     outline: 0;
+    position: relative;
 
     @include mq($until: desktop) {
         position: absolute;
