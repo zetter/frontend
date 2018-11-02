@@ -78,11 +78,11 @@ from scrolling */
         }
 
         @include mq(tablet) {
-            top: 45px;
+            bottom: $gs-baseline / 4;
         }
 
         .new-header--slim & {
-            top: $gs-baseline / 4;
+            bottom: $gs-baseline / 4;
         }
     }
 

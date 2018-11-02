@@ -20,6 +20,10 @@
             }
 
             @include mq(tablet) {
+                height: $pillar-height + ($gs-baseline / 2);
+            }
+
+            @include mq(desktop) {
                 height: $pillar-height;
             }
         }

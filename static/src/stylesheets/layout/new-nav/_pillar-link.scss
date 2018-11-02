@@ -31,15 +31,20 @@
 
     @include mq(tablet) {
         font-size: 22px;
-        padding-top: $gs-baseline - 5px;
+        padding-top: $gs-baseline - 1px;
+        height: $pillar-height + ($gs-baseline / 2);
         padding-right: $gs-gutter;
         padding-left: $pillar-padding;
-        height: $pillar-height;
 
         .new-header--slim & {
             height: $pillar-height + ($gs-baseline / 2);
-            padding-top: $gs-baseline - 2px;
+            padding-top: $gs-baseline - 1px;
         }
+    }
+
+    @include mq(desktop) {
+        padding-top: $gs-baseline - 5px;
+        height: $pillar-height;
     }
 
     body:not(.has-page-skin) & {
@@ -64,8 +69,11 @@
         z-index: 1;
 
         @include mq(tablet) {
+            bottom: 17px;
+        }
+
+        @include mq(desktop) {
             bottom: .6em;
-            top: 0;
 
             .new-header--open & {
                 bottom: 0;
