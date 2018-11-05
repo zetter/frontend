@@ -29,8 +29,8 @@ $padding: 3px;
 
     .identity-header__nav-name {
         max-width: gs-span(2);
-        vertical-align: middle;
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -48,7 +48,7 @@ $padding: 3px;
 
 .identity-header__links {
     float: left;
-    height: 42px;
+    height: 40px;
     display: flex;
     align-items: center;
 }
