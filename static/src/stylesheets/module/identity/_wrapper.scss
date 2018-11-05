@@ -20,7 +20,6 @@
             border-top: 1px solid $brightness-86;
             border-bottom: 0;
             border-right: 0;
-            background: $brightness-97;
             &.tabs__tab--selected {
                 @include mq(desktop) {
                     box-shadow: 0 1px 0 0 $brightness-100;
@@ -28,8 +27,12 @@
             }
         }
         .tabs__tab a {
+            background: $brightness-97;
             font-weight: 400!important;
             /*text can't fit otherwise*/
+        }
+        .tabs__tab--selected a {
+            background: $brightness-100;
         }
     }
 }
