@@ -4,6 +4,7 @@ import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import play.api.libs.json._
+import views.support.ImageUrlSigner
 
 /*
   These elements are used for the Dotcom Rendering, they are essentially the new version of the
@@ -72,7 +73,6 @@ object Sponsorship {
 }
 
 object PageElement {
-
   def make(element: ApiBlockElement): Option[PageElement] = {
 
     element.`type` match {
@@ -88,11 +88,18 @@ object PageElement {
         element.richLinkTypeData.flatMap(_.sponsorship).map(Sponsorship(_))
       ))
 
-      case Image => Some(ImageBlockElement(
-        ImageMedia(element.assets.zipWithIndex.map { case (a, i) => ImageAsset.make(a, i) }),
-        imageDataFor(element),
-        element.imageTypeData.flatMap(_.displayCredit)
-      ))
+      case Image => {
+        val signedAssets = element.assets.zipWithIndex
+          .map { case (a, i) => ImageAsset.make(a, i) }
+          .map { asset =>
+            asset.copy(url = asset.url.map(url => ImageUrlSigner.sign(url)))
+          }
+        Some(ImageBlockElement(
+          ImageMedia(signedAssets),
+          imageDataFor(element),
+          element.imageTypeData.flatMap(_.displayCredit)
+        ))
+      }
 
       case Audio => Some(AudioBlockElement(element.assets.map(AudioAsset.make)))
 
