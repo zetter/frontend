@@ -157,7 +157,6 @@
     "testEnvironment": "jest-environment-jsdom-global"
   },
   "scripts": {
-    "postinstall": "./tools/sync-githooks.js",
     "eslint-fix": "eslint --color --fix",
     "flow": "flow",
     "test": "jest"
