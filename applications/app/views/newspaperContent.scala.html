@@ -1,5 +1,0 @@
-@(paper: controllers.TodayNewspaper)(implicit request: RequestHeader, context: model.ApplicationContext)
-
-@for(bookSection <- paper.bookSections) {
-    @fragments.containers.facia_cards.container(bookSection)
-}
