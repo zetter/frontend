@@ -1,6 +1,6 @@
 module.exports = {
     extends: ['airbnb', 'prettier'],
-    plugins: ['guardian-frontend', 'prettier'],
+    plugins: ['prettier'],
     rules: {
         'import/no-extraneous-dependencies': 'off',
         // prettier settings
@@ -19,8 +19,6 @@ module.exports = {
         'func-style': ['error', 'expression', { allowArrowFunctions: true }],
 
         // our own rules for frontend
-        // live in tools/eslint-plugin-guardian-frontend
-        'guardian-frontend/exports-last': 'error',
 
         'prefer-destructuring': 'off',
     },

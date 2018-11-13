@@ -74,13 +74,6 @@ module.exports = {
         'no-param-reassign': ['error', { props: false }],
         'no-prototype-builtins': 'off',
 
-        // our own rules for frontend
-        // live in tools/eslint-plugin-guardian-frontend
-        'guardian-frontend/global-config': 'error',
-        'guardian-frontend/no-multiple-classlist-parameters': 'error',
-        'guardian-frontend/no-default-export': 'warn',
-        'guardian-frontend/no-direct-access-config': 'warn',
-
         // flow should take care of our return values
         'consistent-return': 'off',
     },

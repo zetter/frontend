@@ -2,10 +2,6 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "workspaces": [
-    "dev/eslint-plugin-guardian-frontend",
-    "tools/amp-validation"
-  ],
   "engines": {
     "yarn": "1.8.0"
   },
