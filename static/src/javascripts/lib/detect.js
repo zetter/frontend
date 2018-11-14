@@ -287,16 +287,6 @@ const pageVisible = (): boolean => pageVisibility === 'visible';
 
 const isEnhanced = (): boolean => window.guardian.isEnhanced;
 
-const adblockInUse: Promise<?boolean> = new Promise(resolve => {
-    if (window.guardian.adBlockers.hasOwnProperty('active')) {
-        // adblock detection has completed
-        resolve(window.guardian.adBlockers.active);
-    } else {
-        // Push a listener for when the JS loads
-        window.guardian.adBlockers.onDetect.push(resolve);
-    }
-});
-
 const getReferrer = (): string => document.referrer || '';
 
 const getUserAgent = ((): string | { browser: string, version: string } => {
@@ -359,6 +349,5 @@ export {
     pageVisible,
     breakpoints,
     isEnhanced,
-    adblockInUse,
     getReferrer,
 };
