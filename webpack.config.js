@@ -4,51 +4,21 @@ const CircularDependencyPlugin = require('circular-dependency-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-    entry: {
-        standard: path.join(
-            __dirname,
-            'static',
-            'src',
-            'javascripts',
-            'boot.js'
-        ),
-        admin: path.join(
-            __dirname,
-            'static',
-            'src',
-            'javascripts',
-            'bootstraps',
-            'admin.js'
-        ),
-        // Old VideoJS embed
-        'videojs-embed': path.join(
-            __dirname,
-            'static',
-            'src',
-            'javascripts',
-            'bootstraps',
-            'videojs-embed.js'
-        ),
-        // Video embed with native video player enhancements
-        'video-embed': path.join(
-            __dirname,
-            'static',
-            'src',
-            'javascripts',
-            'bootstraps',
-            'video-embed.js'
-        ),
-        'youtube-embed': path.join(
-            __dirname,
-            'static',
-            'src',
-            'javascripts',
-            'bootstraps',
-            'youtube-embed.js'
-        ),
-    },
+    entry: path.join(
+        __dirname,
+        'static',
+        'src',
+        'javascripts',
+        'projects',
+        'common',
+        'modules',
+        'crosswords',
+        'crossword.js'
+    ),
     output: {
-        path: path.join(__dirname, 'static', 'target', 'javascripts'),
+        filename: 'index.js',
+        path: path.join(__dirname, 'lib'),
+        libraryTarget: 'commonjs2'
     },
     resolve: {
         modules: [
@@ -94,7 +64,7 @@ module.exports = {
             {
                 test: /\.svg$/,
                 exclude: /(node_modules)/,
-                loader: 'svg-loader',
+                loader: 'svg-inline-loader',
             },
             // Atoms rely on locally defined variables (see atoms/vars.scss)
             // to exhibit the same styles of the underlying platform. This
