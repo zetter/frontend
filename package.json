@@ -85,7 +85,6 @@
       "ophan/ng": "ophan-tracker-js",
       "ophan/embed": "ophan-tracker-js/build/ophan.embed"
     },
-    "testResultsProcessor": "jest-teamcity-reporter",
     "setupTestFrameworkScriptFile": "<rootDir>/dev/jest.setupTestFrameworkScriptFile.js",
     "testEnvironment": "jest-environment-jsdom-global"
   },
