@@ -44,6 +44,10 @@ $mq-breakpoints: (
 // Uncomment to activate during development
 // $mq-show-breakpoints: (mobile, mobileLandscape, tablet, desktop, leftCol, wide);
 
+$guardian-brand:         #005689;
+$guardian-brand-light:   #94b1ca;
+$guardian-brand-dark:    #00456e;
+
 // Neutrals ====================================================================
 $brightness-7:           #121212;
 $brightness-20:          #333333;
@@ -74,3 +78,10 @@ $lifestyle-main:         #bb3b80;
 $lifestyle-bright:       #ffabdb;
 $lifestyle-pastel:       #fec8d3;
 $lifestyle-faded:        #feeef7;
+
+
+$sport-dark:             #005689;
+$sport-main:             #0084c6;
+$sport-bright:           #00b2ff;
+$sport-pastel:           #90dcff;
+$sport-faded:            #f1f8fc;
