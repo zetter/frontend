@@ -160,6 +160,8 @@
     "flow": "flow",
     "test": "jest"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "main": "lib/index.js"
 }
