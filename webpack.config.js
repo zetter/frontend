@@ -18,7 +18,7 @@ module.exports = {
     resolve: {
         modules: [
             path.join(__dirname, 'src', 'javascripts'),
-            path.join(__dirname, 'static', 'src', 'stylesheets'),
+            path.join(__dirname, 'src', 'stylesheets'),
             'node_modules', // default location, but we're overiding above, so it needs to be explicit
         ],
         alias: {

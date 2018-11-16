@@ -1,5 +1,5 @@
 files:
-  include: 'static/src/stylesheets/**/*.scss'
+  include: 'src/stylesheets/**/*.scss'
 
 options:
   formatter: stylish
