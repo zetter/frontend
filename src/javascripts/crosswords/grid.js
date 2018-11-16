@@ -1,8 +1,8 @@
 import React from 'react';
-import { gridSize, clueMapKey } from 'common/modules/crosswords/helpers';
-import { constants } from 'common/modules/crosswords/constants';
-import GridCell from 'common/modules/crosswords/cell';
-import { classNames } from 'common/modules/crosswords/classNames';
+import { gridSize, clueMapKey } from 'crosswords/helpers';
+import { constants } from 'crosswords/constants';
+import GridCell from 'crosswords/cell';
+import { classNames } from 'crosswords/classNames';
 
 // Position at end of previous cell
 const createWordSeparator = (x, y, direction) => {

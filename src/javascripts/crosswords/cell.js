@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { gridSize } from 'common/modules/crosswords/helpers';
-import { constants } from 'common/modules/crosswords/constants';
-import { classNames } from 'common/modules/crosswords/classNames';
+import { gridSize } from 'crosswords/helpers';
+import { constants } from 'crosswords/constants';
+import { classNames } from 'crosswords/classNames';
 
 class Cell extends Component {
     onClick(event) {

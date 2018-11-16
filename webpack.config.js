@@ -5,12 +5,8 @@ const webpack = require('webpack');
 module.exports = {
     entry: path.join(
         __dirname,
-        'static',
         'src',
         'javascripts',
-        'projects',
-        'common',
-        'modules',
         'crosswords',
         'crossword.js'
     ),
@@ -21,12 +17,11 @@ module.exports = {
     },
     resolve: {
         modules: [
-            path.join(__dirname, 'static', 'src', 'javascripts'),
+            path.join(__dirname, 'src', 'javascripts'),
             path.join(__dirname, 'static', 'src', 'stylesheets'),
             'node_modules', // default location, but we're overiding above, so it needs to be explicit
         ],
         alias: {
-            common: 'projects/common',
             svgs: path.join(__dirname, 'src', 'svgs')
         },
     },

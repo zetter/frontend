@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import bean from 'bean';
 import fastdom from 'fastdom';
-import { classNames } from 'common/modules/crosswords/classNames';
+import { classNames } from 'crosswords/classNames';
 import { isBreakpoint } from 'lib/detect';
 import { scrollTo } from 'lib/scroller';
 

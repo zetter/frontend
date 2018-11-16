@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ConfirmButton } from 'common/modules/crosswords/confirm-button';
+import { ConfirmButton } from 'crosswords/confirm-button';
 
 const buttonClassName = 'button button--primary';
 const buttonCurrentClassName = 'button--crossword--current';

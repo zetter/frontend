@@ -1,4 +1,4 @@
-import { constants } from 'common/modules/crosswords/constants';
+import { constants } from 'crosswords/constants';
 import flattenDeep from 'lodash/flattenDeep';
 import range from 'lodash/range';
 import uniqBy from 'lodash/uniqBy';

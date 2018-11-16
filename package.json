@@ -68,11 +68,10 @@
   },
   "jest": {
     "roots": [
-      "<rootDir>/static/src/javascripts"
+      "<rootDir>/src/javascripts"
     ],
     "moduleDirectories": [
-      "<rootDir>/static/src/javascripts",
-      "<rootDir>/static/src/javascripts/projects",
+      "<rootDir>/src/javascripts",
       "node_modules"
     ],
     "moduleNameMapper": {

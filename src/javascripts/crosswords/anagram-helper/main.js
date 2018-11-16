@@ -3,7 +3,7 @@ import closeCentralIcon from 'svgs/close.svg';
 import {
     cellsForClue,
     getAnagramClueData,
-} from 'common/modules/crosswords/helpers';
+} from 'crosswords/helpers';
 import shuffle from 'lodash/shuffle';
 import { ClueInput } from './clue-input';
 import { CluePreview } from './clue-preview';

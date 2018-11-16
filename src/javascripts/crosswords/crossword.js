@@ -6,13 +6,13 @@ import $ from 'lib/$';
 import mediator from 'lib/mediator';
 import { isIOS, isBreakpoint } from 'lib/detect';
 import { scrollTo } from 'lib/scroller';
-import { AnagramHelper } from 'common/modules/crosswords/anagram-helper/main';
+import { AnagramHelper } from 'crosswords/anagram-helper/main';
 import debounce from 'lodash/debounce';
 import zip from 'lodash/zip';
-import { Clues } from 'common/modules/crosswords/clues';
-import { Controls } from 'common/modules/crosswords/controls';
-import { HiddenInput } from 'common/modules/crosswords/hidden-input';
-import { Grid } from 'common/modules/crosswords/grid';
+import { Clues } from 'crosswords/clues';
+import { Controls } from 'crosswords/controls';
+import { HiddenInput } from 'crosswords/hidden-input';
+import { Grid } from 'crosswords/grid';
 import {
     buildClueMap,
     buildGrid,
@@ -30,13 +30,13 @@ import {
     checkClueHasBeenAnswered,
     buildSeparatorMap,
     cellsForEntry,
-} from 'common/modules/crosswords/helpers';
-import { keycodes } from 'common/modules/crosswords/keycodes';
+} from 'crosswords/helpers';
+import { keycodes } from 'crosswords/keycodes';
 import {
     saveGridState,
     loadGridState,
-} from 'common/modules/crosswords/persistence';
-import { classNames } from 'common/modules/crosswords/classNames';
+} from 'crosswords/persistence';
+import { classNames } from 'crosswords/classNames';
 
 class Crossword extends Component {
     constructor(props) {
