@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { render } from 'react-dom';
 import bean from 'bean';
@@ -6,7 +5,7 @@ import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import Crossword from 'common/modules/crosswords/crossword';
 
-const initCrosswords = (): void => {
+const initCrosswords = () => {
     fastdom
         .read(() => document.getElementsByClassName('js-crossword'))
         .then(elements => {

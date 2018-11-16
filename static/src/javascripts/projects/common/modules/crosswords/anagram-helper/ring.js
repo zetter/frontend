@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'react';
 
 const round = x => Math.round(x * 100) / 100;
@@ -8,10 +7,7 @@ const round = x => Math.round(x * 100) / 100;
  * To get the diameter:
  *   (width of .crossword__anagram-helper-shuffler) - (2 * desired padding)
  */
-const getPosition = (
-    angle: number,
-    i: number
-): { left: string, top: string } => {
+const getPosition = (angle, i) => {
     const diameter = 40;
     const theta = ((angle * Math.PI) / 180) * i;
 
@@ -21,7 +17,7 @@ const getPosition = (
     };
 };
 
-class Ring extends Component<*, *> {
+class Ring extends Component {
     render() {
         const angle = 360 / this.props.letters.length;
 

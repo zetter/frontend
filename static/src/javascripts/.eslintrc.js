@@ -1,4 +1,3 @@
-// @flow
 module.exports = {
     env: {
         browser: true,
@@ -12,12 +11,8 @@ module.exports = {
     settings: {
         'import/resolver': 'webpack',
     },
-    extends: [
-        'plugin:flowtype/recommended',
-        'prettier/flowtype',
-        'prettier/react',
-    ],
-    plugins: ['flowtype', 'flow-header'],
+    extends: ['prettier/react'],
+    plugins: [],
     rules: {
         // require-specific overrides
         'import/extensions': 'off',
@@ -34,6 +29,7 @@ module.exports = {
         'react/jsx-no-bind': 'off',
         'react/prefer-stateless-function': 'off',
         'react/jsx-filename-extension': 'off',
+        'react/prop-types': 'off',
 
         // disallow naming variables 'guardian', because
         // window.guardian is our global config/settings object
@@ -70,7 +66,6 @@ module.exports = {
             },
         ],
 
-        'flow-header/flow-header': 'error',
         'no-param-reassign': ['error', { props: false }],
         'no-prototype-builtins': 'off',
 

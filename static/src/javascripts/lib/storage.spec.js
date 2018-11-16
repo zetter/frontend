@@ -1,5 +1,3 @@
-// @flow
-
 import { local, session } from 'lib/storage';
 
 const IO = [

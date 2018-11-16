@@ -1,17 +1,12 @@
-// @flow
-
 /* eslint consistent-return: 0 */
 
 class Storage {
-    storage: any;
-    available: ?boolean;
-
-    constructor(type: string) {
+    constructor(type) {
         this.storage = window[type];
         this.available = this.isAvailable();
     }
 
-    isAvailable(): ?boolean {
+    isAvailable() {
         const key = 'local-storage-module-test';
 
         if (this.available !== undefined) {
@@ -31,7 +26,7 @@ class Storage {
         return this.available;
     }
 
-    get(key: string): any {
+    get(key) {
         if (!this.available) {
             return;
         }
@@ -65,7 +60,7 @@ class Storage {
         return data.value;
     }
 
-    set(key: string, value: any, options: Object = {}): any {
+    set(key, value, options = {}) {
         if (!this.available) {
             return;
         }
@@ -79,7 +74,7 @@ class Storage {
         );
     }
 
-    setIfNotExists(key: string, value: any, options: Object = {}): any {
+    setIfNotExists(key, value, options = {}) {
         if (!this.available) {
             return;
         }
@@ -97,13 +92,13 @@ class Storage {
         );
     }
 
-    getRaw(key: string): ?string {
+    getRaw(key) {
         if (this.available) {
             return this.storage.getItem(key);
         }
     }
 
-    remove(key: string): any {
+    remove(key) {
         if (this.available) {
             return this.storage.removeItem(key);
         }

@@ -1,42 +1,9 @@
-// @flow
-
 import mediator from 'lib/mediator';
-
-declare class MediaQueryListEvent extends Event {
-    matches: boolean;
-    media: string;
-}
-
-type MediaQueryList = {
-    matches: boolean,
-    media: string,
-    onchange: (callback: (event: MediaQueryListEvent) => void) => void,
-    addListener: (callback: (event: MediaQueryListEvent) => void) => void,
-    removeListener: (callback: (event: MediaQueryListEvent) => void) => void,
-};
-
-type BreakpointName =
-    | 'mobile'
-    | 'mobileMedium'
-    | 'mobileLandscape'
-    | 'phablet'
-    | 'tablet'
-    | 'desktop'
-    | 'leftCol'
-    | 'wide';
-
-export type Breakpoint = {
-    name: BreakpointName,
-    isTweakpoint: boolean,
-    listener?: (mql: MediaQueryList) => void,
-    mql?: MediaQueryList,
-    width: number,
-};
 
 // These should match those defined in:
 //   stylesheets/_vars.scss
 //   common/app/layout/Breakpoint.scala
-const breakpoints: Array<Breakpoint> = [
+const breakpoints = [
     {
         name: 'mobile',
         isTweakpoint: false,
@@ -79,9 +46,9 @@ const breakpoints: Array<Breakpoint> = [
     },
 ];
 
-let currentBreakpoint: BreakpointName;
-let currentTweakpoint: BreakpointName;
-let supportsPushState: boolean;
+let currentBreakpoint;
+let currentTweakpoint;
+let supportsPushState;
 // #?: Consider dropping support for vendor-specific implementations
 let pageVisibility =
     document.visibilityState ||
@@ -93,11 +60,9 @@ let pageVisibility =
     document.msVisibilityState ||
     'visible';
 
-const breakpointNames: Array<BreakpointName> = breakpoints.map(
-    breakpoint => breakpoint.name
-);
+const breakpointNames = breakpoints.map(breakpoint => breakpoint.name);
 
-const findBreakpoint = (tweakpoint: BreakpointName): BreakpointName => {
+const findBreakpoint = tweakpoint => {
     let breakpointIndex = breakpointNames.indexOf(tweakpoint);
     let breakpoint = breakpoints[breakpointIndex];
     while (breakpointIndex >= 0 && breakpoint.isTweakpoint) {
@@ -107,7 +72,7 @@ const findBreakpoint = (tweakpoint: BreakpointName): BreakpointName => {
     return breakpoint.name;
 };
 
-const updateBreakpoint = (breakpoint: Breakpoint): void => {
+const updateBreakpoint = breakpoint => {
     currentTweakpoint = breakpoint.name;
 
     if (breakpoint.isTweakpoint) {
@@ -118,15 +83,13 @@ const updateBreakpoint = (breakpoint: Breakpoint): void => {
 };
 
 // this function has a Breakpoint as context, so we can't use fat arrows
-const onMatchingBreakpoint = function(
-    mql: MediaQueryListEvent | MediaQueryList
-): void {
+const onMatchingBreakpoint = function(mql) {
     if (mql && mql.matches) {
         updateBreakpoint(this);
     }
 };
 
-const updateBreakpoints = (): void => {
+const updateBreakpoints = () => {
     // The implementation for browsers that don't support window.matchMedia is simpler,
     // but relies on (1) the resize event, (2) layout and (3) hidden generated content
     // on a pseudo-element
@@ -139,7 +102,7 @@ const updateBreakpoints = (): void => {
     updateBreakpoint(breakpoints[breakpointIndex]);
 };
 
-const initMediaQueryListeners = (): void => {
+const initMediaQueryListeners = () => {
     breakpoints.forEach((bp, index, bps) => {
         // We create mutually exclusive (min-width) and (max-width) media queries
         // to facilitate the breakpoint/tweakpoint logic.
@@ -165,7 +128,7 @@ const initMediaQueryListeners = (): void => {
     });
 };
 
-const initBreakpoints = (): void => {
+const initBreakpoints = () => {
     if ('matchMedia' in window) {
         initMediaQueryListeners();
     } else {
@@ -174,7 +137,7 @@ const initBreakpoints = (): void => {
     }
 };
 
-const getViewport = (): { width: number, height: number } => {
+const getViewport = () => {
     if (
         !window.innerWidth ||
         !(document && document.body && document.body.clientWidth)
@@ -191,10 +154,10 @@ const getViewport = (): { width: number, height: number } => {
     };
 };
 
-const getBreakpoint = (includeTweakpoint?: boolean): BreakpointName =>
+const getBreakpoint = includeTweakpoint =>
     includeTweakpoint ? currentTweakpoint : currentBreakpoint;
 
-const isBreakpoint = (criteria: Object): boolean => {
+const isBreakpoint = criteria => {
     const indexMin = criteria.min ? breakpointNames.indexOf(criteria.min) : 0;
     const indexMax = criteria.max
         ? breakpointNames.indexOf(criteria.max)
@@ -206,10 +169,10 @@ const isBreakpoint = (criteria: Object): boolean => {
     return indexMin <= indexCur && indexCur <= indexMax;
 };
 
-const hasCrossedBreakpoint = (includeTweakpoint: boolean): Function => {
+const hasCrossedBreakpoint = includeTweakpoint => {
     let was = getBreakpoint(includeTweakpoint);
 
-    return (callback: Function): void => {
+    return callback => {
         const is = getBreakpoint(includeTweakpoint);
 
         if (is !== was) {
@@ -219,16 +182,15 @@ const hasCrossedBreakpoint = (includeTweakpoint: boolean): Function => {
     };
 };
 
-const isIOS = (): boolean =>
-    /(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
+const isIOS = () => /(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
 
-const isAndroid = (): boolean => /Android/i.test(navigator.userAgent);
+const isAndroid = () => /Android/i.test(navigator.userAgent);
 
-const hasTouchScreen = (): boolean =>
+const hasTouchScreen = () =>
     'ontouchstart' in window ||
     (window.DocumentTouch && document instanceof window.DocumentTouch);
 
-const hasPushStateSupport = (): boolean => {
+const hasPushStateSupport = () => {
     if (supportsPushState !== undefined) {
         return supportsPushState;
     }
@@ -246,8 +208,8 @@ const hasPushStateSupport = (): boolean => {
     return supportsPushState;
 };
 
-const initPageVisibility = (): void => {
-    const onchange = (evt: Event = window.event) => {
+const initPageVisibility = () => {
+    const onchange = (evt = window.event) => {
         const v = 'visible';
         const evtMap = {
             focus: v,
@@ -283,20 +245,20 @@ const initPageVisibility = (): void => {
     }
 };
 
-const pageVisible = (): boolean => pageVisibility === 'visible';
+const pageVisible = () => pageVisibility === 'visible';
 
-const isEnhanced = (): boolean => window.guardian.isEnhanced;
+const isEnhanced = () => window.guardian.isEnhanced;
 
-const getReferrer = (): string => document.referrer || '';
+const getReferrer = () => document.referrer || '';
 
-const getUserAgent = ((): string | { browser: string, version: string } => {
+const getUserAgent = (() => {
     if (!navigator && !navigator.userAgent) {
         return '';
     }
 
-    const ua: string = navigator.userAgent;
-    let tem: ?Array<any>;
-    let M: ?Array<any> =
+    const ua = navigator.userAgent;
+    let tem;
+    let M =
         ua.match(
             /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i
         ) || [];

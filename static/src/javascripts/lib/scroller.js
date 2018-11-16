@@ -1,5 +1,3 @@
-// @flow
-
 /*  Auto scrolling with easing
 
     Usage:
@@ -15,11 +13,11 @@ import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 
 const scrollTo = (
-    offset: number,
-    duration: number = 0,
-    easeFn?: string = 'easeOutQuad',
-    container: ?HTMLElement = document.body
-): void => {
+    offset,
+    duration = 0,
+    easeFn = 'easeOutQuad',
+    container = document.body
+) => {
     const $container = bonzo(container);
     const from = $container.scrollTop();
     const distance = offset - from;
@@ -35,12 +33,7 @@ const scrollTo = (
     }, duration);
 };
 
-const scrollToElement = (
-    element: HTMLElement | string,
-    duration?: number = 0,
-    easeFn?: string,
-    container: ?HTMLElement
-): void => {
+const scrollToElement = (element, duration = 0, easeFn, container) => {
     const top = bonzo(element).offset().top;
     scrollTo(top, duration, easeFn, container);
 };

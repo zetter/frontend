@@ -1,7 +1,6 @@
-// @flow
 import fastdom from 'fastdom';
 
-const promisify = fdaction => (fn: Function, ctx: ?Object): Promise<any> =>
+const promisify = fdaction => (fn, ctx) =>
     new Promise((resolve, reject) =>
         fdaction(
             /* this function needs to be bound to ctx - it therefore cannot

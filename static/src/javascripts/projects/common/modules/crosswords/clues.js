@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import bean from 'bean';
@@ -7,7 +6,7 @@ import { classNames } from 'common/modules/crosswords/classNames';
 import { isBreakpoint } from 'lib/detect';
 import { scrollTo } from 'lib/scroller';
 
-class Clue extends Component<*, *> {
+class Clue extends Component {
     onClick() {
         this.props.setReturnPosition();
     }
@@ -39,8 +38,8 @@ class Clue extends Component<*, *> {
     }
 }
 
-class Clues extends Component<*, *> {
-    constructor(props: Object) {
+class Clues extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             showGradient: true,
@@ -48,7 +47,7 @@ class Clues extends Component<*, *> {
     }
 
     componentDidMount() {
-        this.$cluesNode = (findDOMNode(this.clues): any);
+        this.$cluesNode = findDOMNode(this.clues);
 
         const height =
             this.$cluesNode.scrollHeight - this.$cluesNode.clientHeight;
@@ -67,7 +66,7 @@ class Clues extends Component<*, *> {
     /**
      * Scroll clues into view when they're activated (i.e. clicked in the grid)
      */
-    componentDidUpdate(prev: Object) {
+    componentDidUpdate(prev) {
         if (
             isBreakpoint({
                 min: 'tablet',
@@ -82,11 +81,9 @@ class Clues extends Component<*, *> {
         }
     }
 
-    $cluesNode: HTMLElement;
-
-    scrollIntoView(clue: Object) {
+    scrollIntoView(clue) {
         const buffer = 100;
-        const node: HTMLElement = (findDOMNode(this[clue.id]): any);
+        const node = findDOMNode(this[clue.id]);
         const visible =
             node.offsetTop - buffer > this.$cluesNode.scrollTop &&
             node.offsetTop + buffer <
