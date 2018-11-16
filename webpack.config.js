@@ -27,7 +27,7 @@ module.exports = {
         ],
         alias: {
             common: 'projects/common',
-            svgs: path.join(__dirname, 'static', 'src', 'inline-svgs')
+            svgs: path.join(__dirname, 'src', 'svgs')
         },
     },
     resolveLoader: {

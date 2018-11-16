@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import closeCentralIcon from 'svgs/icon/close-central.svg';
+import closeCentralIcon from 'svgs/close.svg';
 import {
     cellsForClue,
     getAnagramClueData,
