@@ -23,6 +23,7 @@ module.exports = {
     resolve: {
         modules: [
             path.join(__dirname, 'static', 'src', 'javascripts'),
+            path.join(__dirname, 'static', 'src', 'stylesheets'),
             path.join(__dirname, 'static', 'vendor', 'javascripts'),
             'node_modules', // default location, but we're overiding above, so it needs to be explicit
         ],
@@ -65,6 +66,14 @@ module.exports = {
                 test: /\.svg$/,
                 exclude: /(node_modules)/,
                 loader: 'svg-inline-loader',
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    "style-loader", // creates style nodes from JS strings
+                    "css-loader", // translates CSS into CommonJS
+                    "sass-loader" // compiles Sass to CSS, using Node Sass by default
+                ]
             },
             // Atoms rely on locally defined variables (see atoms/vars.scss)
             // to exhibit the same styles of the underlying platform. This

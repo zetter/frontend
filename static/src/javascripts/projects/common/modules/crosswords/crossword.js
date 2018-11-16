@@ -1,4 +1,5 @@
 // @flow
+import 'main.scss';
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import fastdom from 'fastdom';
